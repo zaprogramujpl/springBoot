@@ -11,6 +11,9 @@ public class HomeController {
 	public ModelAndView indexView()
 	{
 		ModelAndView mnv = new ModelAndView("index");
+		mnv.addObject("imageOneText", "Text image one.");
+		mnv.addObject("imageTwoText", "Text image two.");
+		mnv.addObject("imageThreeText", "Text image three.");
 		return mnv;
 	}
 }
