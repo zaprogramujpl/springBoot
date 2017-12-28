@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html xmlns="http://www.thymeleaf.org" xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity4">
+<head>
+<meta charset="utf-8" />
+<title>User Register Form Component - Webapplication by zaprogramuj.pl</title>
+</head>
+<body>
+	<div th:fragment="userRegisterFormComponent">
+		<div sec:authorize="isAuthenticated()">Zalogowany</div>
+		<div sec:authorize="isAnonymous()">
+			<div>
+				<div class="row">
+					<div class="panel panel-info">
+						<div class="panel-heading">Registration form</div>
+						<div class="panel-body">
+							<div th:if="${userExistError != null}" class="alert alert-danger alert-dismissable">
+								<button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+								<p>Taki użytkownik już istnieje</p>
+							</div>
+							<form th:object="${userProfileForm}" th:action="@{register}" method="POST">
+								<div class="col-md-12">
+									<label class="col-md-12" th:inline="text">[[#{userForm.label.login}]]:</label> <input type="text" th:field="*{login}" placeholder="" class="form-control col-md-6 col-sm-6 col-lg-6 col-xs-6"></input>
+									<div th:if="${#fields.hasErrors('login')}" th:errors="*{login}" class="alert alert-danger col-sm-12 col-lg-12 col-xs-12">Name Error</div>
+								</div>
+								<div class="col-md-12">
+									<label class="col-md-12" th:inline="text">[[#{userForm.label.firstName}]]:</label> <input type="text" th:field="*{firstName}" placeholder="" class="form-control col-md-6 col-sm-6 col-lg-6 col-xs-6"></input>
+									<div th:if="${#fields.hasErrors('firstName')}" th:errors="*{firstName}" class="alert alert-danger col-sm-12 col-lg-12 col-xs-12">Name Error</div>
+								</div>
+								<div class="col-md-12">
+									<label class="col-md-12" th:inline="text">[[#{userForm.label.lastName}]]:</label> <input type="text" th:field="*{lastName}" placeholder="" class="form-control col-md-6 col-sm-6 col-lg-6 col-xs-6"></input>
+									<div th:if="${#fields.hasErrors('lastName')}" th:errors="*{lastName}" class="alert alert-danger col-sm-12 col-lg-12 col-xs-12">Name Error</div>
+								</div>
+								<div class="col-md-12">
+									<label class="col-md-12" th:inline="text">[[#{userForm.label.emailAddress}]]:</label> <input type="text" th:field="*{emailAddress}" placeholder="" class="form-control col-md-6 col-sm-6 col-lg-6 col-xs-6"></input>
+									<div th:if="${#fields.hasErrors('emailAddress')}" th:errors="*{emailAddress}" class="alert alert-danger col-sm-12 col-lg-12 col-xs-12">Name Error</div>
+								</div>
+								<div class="col-md-12">
+									<label class="col-md-12" th:inline="text">[[#{userForm.label.password}]]:</label> <input type="text" th:field="*{password}" placeholder="" class="form-control col-md-6 col-sm-6 col-lg-6 col-xs-6"></input>
+									<div th:if="${#fields.hasErrors('password')}" th:errors="*{password}" class="alert alert-danger col-sm-12 col-lg-12 col-xs-12">Name Error</div>
+								</div>
+								<div class="col-md-12">
+									<label class="col-md-12" th:inline="text">[[#{userForm.label.passwordConfirm}]]:</label> <input type="text" th:field="*{passwordConfirm}" placeholder="" class="form-control col-md-6 col-sm-6 col-lg-6 col-xs-6"></input>
+									<div th:if="${#fields.hasErrors('passwordConfirm')}" th:errors="*{passwordConfirm}" class="alert alert-danger col-sm-12 col-lg-12 col-xs-12">Name Error</div>
+								</div>
+								<div class="col-md-12">
+									<button type="submit" class="btn btn-default" th:inline="text">[[#{userForm.label.button}]]</button>
+								</div>
+							</form>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</body>
+</html>

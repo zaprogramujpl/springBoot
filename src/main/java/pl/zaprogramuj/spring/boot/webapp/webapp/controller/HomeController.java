@@ -9,8 +9,19 @@ public class HomeController {
 
 	@RequestMapping("/")
 	public ModelAndView indexView()
+	{ 
+		return new ModelAndView("index");	
+	}
+	
+	@RequestMapping("/myAccount")
+	public ModelAndView myAccount()
 	{
-		ModelAndView mnv = new ModelAndView("index");
-		return mnv;
+		return new ModelAndView("myAccount");
+	}
+	
+	@RequestMapping("/login")
+	public ModelAndView loginForm()
+	{
+		return new ModelAndView("loginPage/loginPage");
 	}
 }

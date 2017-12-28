@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html xmlns="http://www.thymeleaf.org" xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity4">
+<head>
+<title>Login Component - Webapplication by zaprogramuj.pl</title>
+</head>
+<body>
+	<div th:fragment="loginFormComponent">
+		<form th:action="@{/login}" method="post">
+			<div class="form-group">
+				<label for="userLogin" th:text="#{loginForm.label.login}"></label> <input type="text" class="form-control" id="userLogin" name="userLogin" placeholder="Login" />
+			</div>
+			<div class="form-group">
+				<label for="password" th:text="#{loginForm.label.password}"></label> <input type="password" class="form-control" id="password" name="password" placeholder="Password" />
+			</div>
+			<button type="submit" class="btn btn-default">Submit</button>
+		</form>
+	</div>
+</body>
+</html>
