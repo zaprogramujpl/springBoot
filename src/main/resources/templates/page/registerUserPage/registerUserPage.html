@@ -18,7 +18,7 @@
 								<button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
 								<p>Taki użytkownik już istnieje</p>
 							</div>
-							<form th:object="${userProfileForm}" th:action="@{register}" method="POST">
+							<form th:object="${userProfileForm}" th:action="@{registration}" method="POST">
 								<div class="col-md-12">
 									<label class="col-md-12" th:inline="text">[[#{userForm.label.login}]]:</label> <input type="text" th:field="*{login}" placeholder="" class="form-control col-md-6 col-sm-6 col-lg-6 col-xs-6"></input>
 									<div th:if="${#fields.hasErrors('login')}" th:errors="*{login}" class="alert alert-danger col-sm-12 col-lg-12 col-xs-12">Name Error</div>
