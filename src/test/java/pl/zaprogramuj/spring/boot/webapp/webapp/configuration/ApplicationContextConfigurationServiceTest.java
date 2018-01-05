@@ -5,10 +5,10 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
-import pl.zaprogramuj.spring.boot.webapp.webapp.repository.UserRepository;
-import pl.zaprogramuj.spring.boot.webapp.webapp.repository.impl.UserRepositoryImpl;
-import pl.zaprogramuj.spring.boot.webapp.webapp.service.UserService;
-import pl.zaprogramuj.spring.boot.webapp.webapp.service.impl.UserServiceImpl;
+import pl.zaprogramuj.spring.boot.webapp.repository.UserDao;
+import pl.zaprogramuj.spring.boot.webapp.repository.impl.UserDaoImpl;
+import pl.zaprogramuj.spring.boot.webapp.service.UserService;
+import pl.zaprogramuj.spring.boot.webapp.service.impl.UserServiceImpl;
 
 @Configuration
 public class ApplicationContextConfigurationServiceTest {
@@ -24,7 +24,7 @@ public class ApplicationContextConfigurationServiceTest {
     }
 	
 	@Bean
-	public UserRepository mockUserDao(){
-		return Mockito.mock(UserRepository.class);
+	public UserDao mockUserDao(){
+		return Mockito.mock(UserDao.class);
 	}
 }

@@ -1,5 +1,8 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.w3.org/1999/xhtml" xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity4">
+<head>
+<meta charset="utf-8" />
+</head>
 <body>
 	<div th:fragment="navbar">
 		<nav class="navbar navbar-default">
@@ -28,7 +31,7 @@
 					<a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Menu<span class="caret"></span></a>
 						<ul class="dropdown-menu" sec:authorize="isAnonymous()">
 							<li><a href="#" th:href="@{/}" th:inline="text">[[#{menu.mainPage}]]</a></li>
-							<li><a href="#" th:href="@{/register}" th:inline="text">[[#{menu.createAccount}]]</a></li>
+							<li><a href="#" th:href="@{/registration}" th:inline="text">[[#{menu.createAccount}]]</a></li>
 							<li><a href="#" th:href="@{/login}" th:inline="text">[[#{menu.loginPage}]]</a></li>
 						</ul>
 						<ul class="dropdown-menu" sec:authorize="isAuthenticated()">

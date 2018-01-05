@@ -1,7 +1,6 @@
 package pl.zaprogramuj.spring.boot.webapp.webapp.service.impl;
 
 import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.fail;
 import static org.mockito.Mockito.when;
 
 import org.junit.Test;
@@ -10,12 +9,12 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringRunner;
 
+import pl.zaprogramuj.spring.boot.webapp.domain.user.User;
+import pl.zaprogramuj.spring.boot.webapp.excepotion.user.UserExistsException;
+import pl.zaprogramuj.spring.boot.webapp.excepotion.user.UserNotFoundException;
+import pl.zaprogramuj.spring.boot.webapp.repository.UserDao;
+import pl.zaprogramuj.spring.boot.webapp.service.UserService;
 import pl.zaprogramuj.spring.boot.webapp.webapp.configuration.ApplicationContextConfigurationServiceTest;
-import pl.zaprogramuj.spring.boot.webapp.webapp.domain.user.UserProfile;
-import pl.zaprogramuj.spring.boot.webapp.webapp.excepotion.user.UserExistsException;
-import pl.zaprogramuj.spring.boot.webapp.webapp.excepotion.user.UserNotFoundException;
-import pl.zaprogramuj.spring.boot.webapp.webapp.repository.UserRepository;
-import pl.zaprogramuj.spring.boot.webapp.webapp.service.UserService;
 
 @RunWith(SpringRunner.class)
 @ContextConfiguration(classes = { ApplicationContextConfigurationServiceTest.class })
@@ -25,17 +24,17 @@ public class UserServiceImplTest {
 	private UserService userService;
 
 	@Autowired
-	private UserRepository userRepository;
+	private UserDao userRepository;
 
 	// test for method : findByLogin [BEGIN]
 	@Test
 	public void shouldFindUserByLogin() {
-		UserProfile userProfile = new UserProfile();
-		userProfile.setLogin("test");
+		User user = new User();
+		user.setLogin("test");
 
-		when(userRepository.findByLogin(userProfile.getLogin())).thenReturn(userProfile);
+		when(userRepository.findByLogin(user.getLogin())).thenReturn(user);
 
-		assertEquals(userProfile, userService.getUserByLogin(userProfile.getLogin()));
+		assertEquals(user, userService.getUserByLogin(user.getLogin()));
 	}
 
 	@Test
@@ -49,12 +48,12 @@ public class UserServiceImplTest {
 	// Tests for method : registerUser [BEGIN]
 	@Test(expected = UserExistsException.class)
 	public void shouldThrowExceptionWhenTriedAddExistingUser() throws UserExistsException {
-		UserProfile userProfile = new UserProfile();
-		userProfile.setLogin("test");
+		User user = new User();
+		user.setLogin("test");
 
-		when(userRepository.findByLogin(userProfile.getLogin())).thenReturn(userProfile);
+		when(userRepository.findByLogin(user.getLogin())).thenReturn(user);
 
-		userService.registerUser(userProfile);
+		userService.registerUser(user);
 	}
 	// Tests for method : registerUser [END]
 
@@ -62,22 +61,22 @@ public class UserServiceImplTest {
 
 	@Test
 	public void shouldFindUserWithGivenId() throws UserNotFoundException {
-		UserProfile userProfile = new UserProfile();
-		userProfile.setId(1);
+		User user = new User();
+		user.setId(1);
 		
-		when(userRepository.findById(userProfile.getId())).thenReturn(userProfile);
+		when(userRepository.findById(user.getId())).thenReturn(user);
 		
-		assertEquals(userProfile, userService.getUserById(userProfile.getId()));
+		assertEquals(user, userService.getUserById(user.getId()));
 	}
 
 	@Test(expected = UserNotFoundException.class)
 	public void shouldThrowExceptionWhenThereIsNotUserWithGivenId() throws UserNotFoundException {
-		UserProfile userProfile = new UserProfile();
-		userProfile.setId(1);
+		User user = new User();;
+		user.setId(1);
 		
-		when(userRepository.findById(userProfile.getId())).thenReturn(null);
+		when(userRepository.findById(user.getId())).thenReturn(null);
 		
-		assertEquals(userProfile, userService.getUserById(userProfile.getId()));
+		assertEquals(user, userService.getUserById(user.getId()));
 	}
 
 	// Tests for method : getUserById [END]
