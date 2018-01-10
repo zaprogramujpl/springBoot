@@ -53,7 +53,7 @@ public class User implements UserDetails
 			@JoinColumn(name = "USER_PROFILE_ID") })
 	private Set<UserRole> roles = new HashSet<>();
 
-	@OneToOne(mappedBy = "user", fetch = FetchType.EAGER)
+	@OneToOne(mappedBy = "user", cascade = CascadeType.ALL)
 	private PasswordResetToken passwordResetToken;
 
 	public long getId()

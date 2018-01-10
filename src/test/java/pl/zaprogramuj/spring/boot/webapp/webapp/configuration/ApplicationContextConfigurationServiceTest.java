@@ -6,7 +6,6 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
 import pl.zaprogramuj.spring.boot.webapp.repository.UserDao;
-import pl.zaprogramuj.spring.boot.webapp.repository.impl.UserDaoImpl;
 import pl.zaprogramuj.spring.boot.webapp.service.UserService;
 import pl.zaprogramuj.spring.boot.webapp.service.impl.UserServiceImpl;
 

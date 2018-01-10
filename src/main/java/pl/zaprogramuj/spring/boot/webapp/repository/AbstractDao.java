@@ -38,4 +38,9 @@ public abstract class AbstractDao<PK extends Serializable, T> {
 	{
 		return entityManager.merge(entity);
 	}
+	
+	protected void remove(T entity)
+	{
+		entityManager.remove(entity);
+	}
 }

@@ -13,6 +13,8 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
 
 import pl.zaprogramuj.spring.boot.webapp.domain.form.password.PasswordForgotForm;
+import pl.zaprogramuj.spring.boot.webapp.domain.mail.Mail;
+import pl.zaprogramuj.spring.boot.webapp.domain.mail.MailTemplateType;
 import pl.zaprogramuj.spring.boot.webapp.domain.user.User;
 import pl.zaprogramuj.spring.boot.webapp.excepotion.user.UserNotFoundException;
 import pl.zaprogramuj.spring.boot.webapp.util.SystemViewsName;
@@ -38,13 +40,13 @@ public class PasswordForgotController extends AbstractController
 	@RequestMapping
 	public ModelAndView forgotPasswordView()
 	{
-		return new ModelAndView(SystemViewsName.FORGOT_PASSWORD);
+		return new ModelAndView(SystemViewsName.PASSWORD_FORGOT);
 	}
 	
 	@RequestMapping(method = RequestMethod.POST)
 	public ModelAndView forgotPasswordViewPost(@ModelAttribute("forgotPasswordForm") @Validated PasswordForgotForm form, BindingResult bindingResult)
 	{
-		ModelAndView modelAndView = new ModelAndView(SystemViewsName.FORGOT_PASSWORD);
+		ModelAndView modelAndView = new ModelAndView(SystemViewsName.PASSWORD_FORGOT);
 		
 		User user = tryGetUserByEmailAddress(form.getEmailAddress());
 		
@@ -58,12 +60,18 @@ public class PasswordForgotController extends AbstractController
 			bindingResult.rejectValue("emailAddress", "forgotPasswordFormValidator.userNotExist");
 			return modelAndView;
 		}
-		
 		getUserService().addUewPasswordResetTokenToUser(user);
+		
+		Mail mail = new Mail();
+		mail.setTo(user.getEmailAddress());
+		mail.setTemplateType(MailTemplateType.FORGOT_PASSWORD);
+		mail.setSubject("Test");
+		//getEmailService().sendEmail(mail);
+		
 		modelAndView.addObject("successSendingEmail", true);
 		return modelAndView;
 	}
-	
+		
 	private User tryGetUserByEmailAddress(String emailAddress)
 	{
 		User user = null;	
