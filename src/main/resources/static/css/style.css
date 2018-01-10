@@ -1,3 +1,23 @@
-h100{
-	
+
+/*
+	100vh - 100% wysokoœci ekranu
+	100vw - 100% szerokosci ekranu
+*/
+body{
+	min-height: 100vh;
+	position: relative;
+}
+
+form div.alert{
+	margin-top: 5px;
+}
+
+footer{
+	position: absolute;
+    bottom: 0;
+    width: 100%;
+}
+
+footer .navbar{
+	margin-bottom: 0px;
 }

@@ -1,0 +1,15 @@
+<!DOCTYPE html>
+<html xmlns="http://www.thymeleaf.org"
+	xmlns:th="http://www.thymeleaf.org"
+	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity4"
+	layout:decorate="common/layout">
+  <head>
+  		<title>User Profile - Webapplication by Zaprogramuj.pl</title>
+  </head>
+<body>
+	<div layout:fragment="content">
+		<span sec:authentication="principal"></span>
+	</div>
+</body>
+</html>

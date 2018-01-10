@@ -9,6 +9,9 @@
 	<div layout:fragment="content">
 		<h1>Content</h1>
 	</div>
-	<footer th:replace="common/footer :: body-bottom-scripts"></footer>
+	<div th:replace="common/footer :: body-bottom-scripts"></div>
+	<footer>
+		<div  th:replace="common/footer :: footer"></div>
+	</footer>
 </body>
 </html>
