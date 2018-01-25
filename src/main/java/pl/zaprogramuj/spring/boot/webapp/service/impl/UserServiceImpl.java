@@ -41,8 +41,16 @@ public class UserServiceImpl implements UserService{
 	}
 
 	@Override
-	public User getUserByLogin(String userLogin) {
-		return userRepository.findByLogin(userLogin);
+	public User getUserByLogin(String userLogin) throws UserNotFoundException {
+
+		User user = userRepository.findByLogin(userLogin);
+
+		if(user == null)
+		{
+			throw new UserNotFoundException(userLogin);
+		}
+
+		return user;
 	}
 
 	@Override
@@ -70,6 +78,18 @@ public class UserServiceImpl implements UserService{
 	}
 
 	@Override
+	public User getUserByName(String userName) throws UserNotFoundException {
+
+		User user = userRepository.findByName(userName);
+
+		if(user == null)
+		{
+			throw new UserNotFoundException(userName);
+		}
+		return user;
+	}
+
+	@Override
 	public void addUewPasswordResetTokenToUser(User user)
 	{	
 		PasswordResetToken passwordResetToken = createNewPasswordResetToken();
@@ -80,15 +100,27 @@ public class UserServiceImpl implements UserService{
 	}
 	
 	@Override
-	public void updateUserPassword(User newUser, String password) throws UserNotFoundException
+	public void updateUserPassword(User updatedUser, String password) throws UserNotFoundException
 	{
-		User user = getUserByEmail(newUser.getEmailAddress());
-		
-		user.setPassword(passwordEncoder.encode(password));	
-		//TODO: MKT - do przetestowania czy jest to potrzebne
-		userRepository.updateUser(user);
-	}	
-	
+		User user = getUserByEmail(updatedUser.getEmailAddress());
+		user.setPassword(passwordEncoder.encode(password));
+	}
+
+	@Override
+	public User updateUser(String updatedUserEmail, User userInformation) throws UserNotFoundException {
+
+		User user = userRepository.findByEmailAddress(updatedUserEmail);
+		if(user == null)
+		{
+			throw new UserNotFoundException(updatedUserEmail);
+		}
+		user.setFirstName(userInformation.getFirstName());
+		user.setEmailAddress(userInformation.getEmailAddress());
+		user.setLastName(userInformation.getLastName());
+		user.setPhone(userInformation.getPhone());
+		return user;
+	}
+
 	private PasswordResetToken createNewPasswordResetToken()
 	{
 		PasswordResetToken passwordResetToken = new PasswordResetToken();
@@ -98,8 +130,7 @@ public class UserServiceImpl implements UserService{
 	}
 
 	@Override
-	public void updateUserAfterResetPassword(User user)
-	{
-		// TODO Auto-generated method stub
+	public boolean isUserWithEmaillAddress(String emailAddress) {
+		return userRepository.findByEmailAddress(emailAddress) != null;
 	}
 }

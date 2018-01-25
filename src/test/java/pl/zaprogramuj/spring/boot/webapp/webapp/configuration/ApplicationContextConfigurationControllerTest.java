@@ -6,6 +6,8 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.validation.Validator;
 
+import pl.zaprogramuj.spring.boot.webapp.component.LoggedUserInformationComponent;
+import pl.zaprogramuj.spring.boot.webapp.component.impl.LoggedUserInformationComponentImpl;
 import pl.zaprogramuj.spring.boot.webapp.service.EmailService;
 import pl.zaprogramuj.spring.boot.webapp.service.PasswordResetTokenService;
 import pl.zaprogramuj.spring.boot.webapp.service.SystemPropertiesService;
@@ -50,4 +52,12 @@ public class ApplicationContextConfigurationControllerTest {
 	public Validator mockForgotPasswordFormValidator() {
 		return Mockito.mock(ForgotPasswordFormValidator.class);
 	}
+
+	@Bean
+	public LoggedUserInformationComponent mockLoggedUserInformationComponent()
+	{
+		return Mockito.mock(LoggedUserInformationComponentImpl.class);
+	}
+
+
 }

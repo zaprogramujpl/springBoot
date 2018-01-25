@@ -8,7 +8,6 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-
 import pl.zaprogramuj.spring.boot.webapp.domain.user.User;
 import pl.zaprogramuj.spring.boot.webapp.repository.UserDao;
 
@@ -28,6 +27,5 @@ public class UserDetailsServiceImpl implements UserDetailsService {
 			throw new UsernameNotFoundException("Username not found");
 		}
 		return new org.springframework.security.core.userdetails.User(userProfile.getLogin(), userProfile.getPassword(), userProfile.getAuthorities());
-		
 	}
 }

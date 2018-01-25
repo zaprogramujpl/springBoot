@@ -7,13 +7,13 @@ import org.springframework.stereotype.Controller;
 import org.springframework.validation.Validator;
 import org.springframework.web.bind.annotation.ModelAttribute;
 
+import pl.zaprogramuj.spring.boot.webapp.component.LoggedUserInformationComponent;
 import pl.zaprogramuj.spring.boot.webapp.service.EmailService;
 import pl.zaprogramuj.spring.boot.webapp.service.PasswordResetTokenService;
 import pl.zaprogramuj.spring.boot.webapp.service.SystemPropertiesService;
 import pl.zaprogramuj.spring.boot.webapp.service.UserRoleService;
 import pl.zaprogramuj.spring.boot.webapp.service.UserService;
 
-@Controller
 public abstract class AbstractController 
 {	
     @Autowired
@@ -33,6 +33,9 @@ public abstract class AbstractController
 	
 	@Autowired
 	private EmailService emailService;
+
+	@Autowired
+	private LoggedUserInformationComponent loggedUserInformationComponent;
 	
 	@Autowired
 	@Qualifier("userFormValidator")
@@ -81,5 +84,10 @@ public abstract class AbstractController
 	public MessageSource getMessageSource()
 	{
 		return messageSource;
+	}
+
+	public LoggedUserInformationComponent getLoggedUserInformationComponent()
+	{
+		return loggedUserInformationComponent;
 	}
 }
