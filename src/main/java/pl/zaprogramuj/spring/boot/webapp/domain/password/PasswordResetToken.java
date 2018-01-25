@@ -6,7 +6,6 @@ import java.util.Date;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -69,6 +68,10 @@ public class PasswordResetToken {
 		dateTime = dateTime.plusMinutes(minutes);
 		this.expiryDate = Date.from(dateTime.atZone(ZoneId.systemDefault()).toInstant());
 	}
+	
+    public boolean isExpired() {
+        return LocalDateTime.now().isAfter(LocalDateTime.ofInstant(expiryDate.toInstant(), ZoneId.systemDefault()));
+    }
 
 	@Override
 	public String toString() {

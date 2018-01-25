@@ -2,10 +2,12 @@ package pl.zaprogramuj.spring.boot.webapp.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.context.MessageSource;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.Validator;
 import org.springframework.web.bind.annotation.ModelAttribute;
 
+import pl.zaprogramuj.spring.boot.webapp.service.EmailService;
 import pl.zaprogramuj.spring.boot.webapp.service.PasswordResetTokenService;
 import pl.zaprogramuj.spring.boot.webapp.service.SystemPropertiesService;
 import pl.zaprogramuj.spring.boot.webapp.service.UserRoleService;
@@ -14,6 +16,9 @@ import pl.zaprogramuj.spring.boot.webapp.service.UserService;
 @Controller
 public abstract class AbstractController 
 {	
+    @Autowired
+    private MessageSource messageSource;
+	
 	@Autowired
 	private SystemPropertiesService systemProperties;
 	
@@ -25,6 +30,9 @@ public abstract class AbstractController
 	
 	@Autowired
 	private PasswordResetTokenService passwordResetTokenService;
+	
+	@Autowired
+	private EmailService emailService;
 	
 	@Autowired
 	@Qualifier("userFormValidator")
@@ -63,5 +71,15 @@ public abstract class AbstractController
 	public PasswordResetTokenService getPasswordResetTokenService()
 	{
 		return passwordResetTokenService;
+	}
+
+	public EmailService getEmailService()
+	{
+		return emailService;
+	}
+
+	public MessageSource getMessageSource()
+	{
+		return messageSource;
 	}
 }

@@ -12,6 +12,10 @@ import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 
 @Configuration
 public class WebSecurityConfig extends WebSecurityConfigurerAdapter{
+	
+	private static final String[] MATCHERS = {"/", "/resources/**", "/registration", 
+											  "/login*", "/webjars/**", "/css/**", "/forgot-password**"
+											  ,"/reset-password**"};
 
     @Autowired
     private UserDetailsService userDetailsService;
@@ -24,8 +28,9 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter{
     @Override
     protected void configure(HttpSecurity http) throws Exception {
         http
+        		.csrf().disable()
                 .authorizeRequests()
-                    .antMatchers("/", "/resources/**", "/registration", "/login*", "/webjars/**", "/css/**", "/forgot-password**").permitAll()
+                    .antMatchers(MATCHERS).permitAll()
                     .anyRequest().authenticated()
                     .and()
                 .formLogin()

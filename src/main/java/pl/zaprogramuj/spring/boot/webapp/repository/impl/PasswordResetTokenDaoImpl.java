@@ -11,6 +11,7 @@ import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Repository;
 
 import pl.zaprogramuj.spring.boot.webapp.domain.password.PasswordResetToken;
+import pl.zaprogramuj.spring.boot.webapp.excepotion.password.token.PasswordResetTokenNotFoundException;
 import pl.zaprogramuj.spring.boot.webapp.repository.AbstractDao;
 import pl.zaprogramuj.spring.boot.webapp.repository.PasswordResetTokenDao;
 
@@ -29,6 +30,12 @@ public class PasswordResetTokenDaoImpl extends AbstractDao<Long, PasswordResetTo
 		criteriaQuery.select(root).where(builder.equal(root.get("token"), token));		
 		Query<PasswordResetToken> query = session.createQuery(criteriaQuery);
 		
-		return query.getSingleResult();
+		return query.getResultList().isEmpty() ? null : query.getSingleResult();
 	}
+
+	@Override
+	public void deleteToken(PasswordResetToken token)
+	{
+		remove(token);
+	}	
 }

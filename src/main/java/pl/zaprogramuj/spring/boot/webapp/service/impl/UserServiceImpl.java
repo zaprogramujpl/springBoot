@@ -71,10 +71,23 @@ public class UserServiceImpl implements UserService{
 
 	@Override
 	public void addUewPasswordResetTokenToUser(User user)
-	{		
-		user.setPasswordResetToken(createNewPasswordResetToken());	
+	{	
+		PasswordResetToken passwordResetToken = createNewPasswordResetToken();
+		passwordResetToken.setUser(user);
+		user.setPasswordResetToken(passwordResetToken);
+		
 		userRepository.updateUser(user);
 	}
+	
+	@Override
+	public void updateUserPassword(User newUser, String password) throws UserNotFoundException
+	{
+		User user = getUserByEmail(newUser.getEmailAddress());
+		
+		user.setPassword(passwordEncoder.encode(password));	
+		//TODO: MKT - do przetestowania czy jest to potrzebne
+		userRepository.updateUser(user);
+	}	
 	
 	private PasswordResetToken createNewPasswordResetToken()
 	{
@@ -82,5 +95,11 @@ public class UserServiceImpl implements UserService{
 		passwordResetToken.setToken(UUID.randomUUID().toString());
 		passwordResetToken.setExpiryDate(60);
 		return passwordResetToken;
+	}
+
+	@Override
+	public void updateUserAfterResetPassword(User user)
+	{
+		// TODO Auto-generated method stub
 	}
 }

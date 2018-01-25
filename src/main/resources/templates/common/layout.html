@@ -6,6 +6,10 @@
 <header th:replace="common/header :: common-header"></header>
 <body>
 	<div th:replace="common/navbar :: navbar"></div>
+	<div th:if="${error} != null">
+					<div th:text="${error}"></div>
+	</div>
+	<div th:text="${error2}"></div>
 	<div layout:fragment="content">
 		<h1>Content</h1>
 	</div>
