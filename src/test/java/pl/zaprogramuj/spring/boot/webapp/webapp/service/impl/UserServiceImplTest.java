@@ -1,11 +1,14 @@
 package pl.zaprogramuj.spring.boot.webapp.webapp.service.impl;
 
-import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.*;
+import static org.mockito.ArgumentMatchers.notNull;
 import static org.mockito.Mockito.when;
 
 import org.junit.Test;
 import org.junit.runner.RunWith;
+import org.mockito.Mockito;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringRunner;
 
@@ -24,24 +27,27 @@ public class UserServiceImplTest {
 	private UserService userService;
 
 	@Autowired
-	private UserDao userRepository;
+	private UserDao mockUserRepository;
+
+	@Autowired
+	private BCryptPasswordEncoder passwordEncoder;
 
 	// test for method : findByLogin [BEGIN]
 	@Test
-	public void shouldFindUserByLogin() {
+	public void shouldFindUserByLogin() throws UserNotFoundException {
 		User user = new User();
 		user.setLogin("test");
 
-		when(userRepository.findByLogin(user.getLogin())).thenReturn(user);
+		when(mockUserRepository.findByLogin(user.getLogin())).thenReturn(user);
 
 		assertEquals(user, userService.getUserByLogin(user.getLogin()));
 	}
 
-	@Test
-	public void shouldReturnNullWhenThereIsNoUserWithGivenLogin() {
-		when(userRepository.findByLogin("test")).thenReturn(null);
+	@Test(expected = UserNotFoundException.class)
+	public void shouldReturnNullWhenThereIsNoUserWithGivenLogin() throws UserNotFoundException {
+		when(mockUserRepository.findByLogin("test")).thenReturn(null);
 
-		assertEquals(null, userService.getUserByLogin("test"));
+		userService.getUserByLogin("test");
 	}
 	// test for method : findByLogin [END]
 
@@ -51,7 +57,7 @@ public class UserServiceImplTest {
 		User user = new User();
 		user.setLogin("test");
 
-		when(userRepository.findByLogin(user.getLogin())).thenReturn(user);
+		when(mockUserRepository.findByLogin(user.getLogin())).thenReturn(user);
 
 		userService.registerUser(user);
 	}
@@ -64,20 +70,70 @@ public class UserServiceImplTest {
 		User user = new User();
 		user.setId(1);
 		
-		when(userRepository.findById(user.getId())).thenReturn(user);
+		when(mockUserRepository.findById(user.getId())).thenReturn(user);
 		
 		assertEquals(user, userService.getUserById(user.getId()));
 	}
 
 	@Test(expected = UserNotFoundException.class)
 	public void shouldThrowExceptionWhenThereIsNotUserWithGivenId() throws UserNotFoundException {
-		User user = new User();;
-		user.setId(1);
-		
-		when(userRepository.findById(user.getId())).thenReturn(null);
-		
-		assertEquals(user, userService.getUserById(user.getId()));
+		when(mockUserRepository.findById(1)).thenReturn(null);
+		userService.getUserById(1);
+	}
+	// Tests for method : getUserById [END]
+
+	// Test for method : updateUser [BEGIN]
+	@Test
+	public void shouldReturnNotNullObject() throws UserNotFoundException {
+		User updatedUser = Mockito.mock(User.class);
+
+		when(updatedUser.getPassword()).thenReturn("password");
+		when(updatedUser.getEmailAddress()).thenReturn("emailAddress");
+		when(mockUserRepository.findByEmailAddress("emailAddress")).thenReturn(Mockito.mock(User.class));
+
+		assertNotNull(userService.updateUser("emailAddress", updatedUser));
 	}
 
-	// Tests for method : getUserById [END]
+	@Test(expected = UserNotFoundException.class)
+	public void shouldThrowExceptionIfUserWitlEmailIsNotExist() throws UserNotFoundException {
+		User updatedUser = Mockito.mock(User.class);
+
+		when(updatedUser.getEmailAddress()).thenReturn("emailAddress");
+		when(mockUserRepository.findByEmailAddress("emailAddress")).thenReturn(null);
+
+		userService.updateUser("emailAddress", updatedUser);
+	}
+
+	@Test
+	public void shouldReturnUserWithChangedDate() throws UserNotFoundException {
+		//given
+		User userInformation = new User();
+		userInformation.setEmailAddress("emailAddress");
+		userInformation.setFirstName("firstName");
+		userInformation.setLastName("lastName");
+		userInformation.setPhone("phonenumber");
+		userInformation.setPassword("password");
+		User repositoryUser = new User();
+		repositoryUser.setEmailAddress("emailAddress");
+
+		//when
+		when(mockUserRepository.findByEmailAddress("emailAddress")).thenReturn(repositoryUser);
+
+		//then
+		User updatedUser = userService.updateUser("emailAddress", userInformation);
+		assertEquals(userInformation.getFirstName(), updatedUser.getFirstName());
+		assertEquals(userInformation.getLastName(), updatedUser.getLastName());
+		assertEquals(userInformation.getPhone(), updatedUser.getPhone());
+	}
+	// Test for method : updateUser [END]
+
+	// Test for method : isUserWithEmailAddress [BEGIN]
+	@Test
+	public void shouldReturnTrueIfExistUserWithEmaill()
+	{
+		when(mockUserRepository.findByEmailAddress("email")).thenReturn(Mockito.mock(User.class));
+
+		assertTrue(userService.isUserWithEmaillAddress("email"));
+	}
+	// Test for method : isUserWithEmailAddress [END]
 }

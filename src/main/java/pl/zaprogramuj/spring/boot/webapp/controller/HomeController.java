@@ -32,12 +32,6 @@ public class HomeController extends AbstractController
 		return new ModelAndView(SystemViewsName.INDEX);
 	}
 
-	@RequestMapping("/myAccount")
-	public ModelAndView myAccount()
-	{
-		return new ModelAndView("myAccount");
-	}
-
 	@RequestMapping("/login")
 	public ModelAndView loginForm()
 	{
@@ -74,12 +68,6 @@ public class HomeController extends AbstractController
 		}
 
 		return mnv;
-	}
-
-	@RequestMapping(value = "/profile", method = RequestMethod.GET)
-	public ModelAndView userProfilePage()
-	{
-		return new ModelAndView(SystemViewsName.USER_PROFILE);
 	}
 
 	private void registerUser(UserProfileForm userProfileForm) throws UserExistsException

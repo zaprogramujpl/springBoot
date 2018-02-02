@@ -1,15 +1,21 @@
 <!DOCTYPE html>
 <html xmlns="http://www.thymeleaf.org"
-	xmlns:th="http://www.thymeleaf.org"
-	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
-	xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity4"
-	layout:decorate="common/layout">
-  <head>
-  		<title>User Profile - Webapplication by Zaprogramuj.pl</title>
-  </head>
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity4"
+      layout:decorate="common/layout">
+<head>
+    <title>User Profile - Webapplication by Zaprogramuj.pl</title>
+    <meta charset="utf-8"/>
+</head>
 <body>
-	<div layout:fragment="content">
-		<span sec:authentication="principal"></span>
-	</div>
+<div layout:fragment="content">
+    <div class="container">
+        <div class="col-md-6">
+            <div th:include="component/user/userEntityForm :: userEntityForm('/profile')"
+                 th:with="userProfileTh=${userProfile}"></div>
+        </div>
+    </div>
+</div>
 </body>
 </html>

@@ -46,6 +46,19 @@ public class UserDaoImpl extends AbstractDao<Long, User> implements UserDao
 	}
 
 	@Override
+	public User findByName(String username) {
+		Session session = getEntityMenager().unwrap(Session.class);
+		CriteriaBuilder builder = session.getCriteriaBuilder();
+
+		CriteriaQuery<User> criteriaQuery = builder.createQuery(User.class);
+		Root<User> rootUser = criteriaQuery.from(User.class);
+		criteriaQuery.select(rootUser).where(builder.equal(rootUser.get("username"), username));
+		Query<User> query = session.createQuery(criteriaQuery);
+
+		return query.getResultList().isEmpty() ? null : query.getSingleResult();
+	}
+
+	@Override
 	public User findByEmailAddress(String emailAddress)
 	{
 		Session session = getEntityMenager().unwrap(Session.class);

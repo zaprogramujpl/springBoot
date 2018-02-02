@@ -5,6 +5,8 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
+import pl.zaprogramuj.spring.boot.webapp.component.LoggedUserInformationComponent;
+import pl.zaprogramuj.spring.boot.webapp.component.impl.LoggedUserInformationComponentImpl;
 import pl.zaprogramuj.spring.boot.webapp.repository.UserDao;
 import pl.zaprogramuj.spring.boot.webapp.service.UserService;
 import pl.zaprogramuj.spring.boot.webapp.service.impl.UserServiceImpl;
@@ -25,5 +27,11 @@ public class ApplicationContextConfigurationServiceTest {
 	@Bean
 	public UserDao mockUserDao(){
 		return Mockito.mock(UserDao.class);
+	}
+
+	@Bean
+	public LoggedUserInformationComponent getLoggedUserInformationComponent()
+	{
+		return new LoggedUserInformationComponentImpl();
 	}
 }

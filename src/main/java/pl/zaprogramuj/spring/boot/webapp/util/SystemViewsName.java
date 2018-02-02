@@ -10,7 +10,10 @@ public final class SystemViewsName {
 	public static final String REDIRECT_TO_MAIN_PAGE = "redirect:/";
 	public static final String PASSWORD_FORGOT = "page/forgotPasswordPage/forgotPasswordPage";
 	public static final String PASSWORD_RESET = "page/resetPasswordPage/resetPasswordPage";
+	
 	public static final String REDIRECT_TO_FORGOT_PASSWORD_PAGE = "redirect:/forgot-password";
+	public static final String REDIRECT_AUTHENTICATION = "http://localhost/login";
+	
 	private SystemViewsName() {
 
 	}
