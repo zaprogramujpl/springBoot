@@ -11,7 +11,6 @@ import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Repository;
 
 import pl.zaprogramuj.spring.boot.webapp.domain.password.PasswordResetToken;
-import pl.zaprogramuj.spring.boot.webapp.excepotion.password.token.PasswordResetTokenNotFoundException;
 import pl.zaprogramuj.spring.boot.webapp.repository.AbstractDao;
 import pl.zaprogramuj.spring.boot.webapp.repository.PasswordResetTokenDao;
 
