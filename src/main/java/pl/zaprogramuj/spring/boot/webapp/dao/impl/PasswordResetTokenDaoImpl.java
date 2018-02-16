@@ -1,4 +1,4 @@
-package pl.zaprogramuj.spring.boot.webapp.repository.impl;
+package pl.zaprogramuj.spring.boot.webapp.dao.impl;
 
 import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
@@ -10,9 +10,9 @@ import org.springframework.beans.factory.config.BeanDefinition;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Repository;
 
+import pl.zaprogramuj.spring.boot.webapp.dao.AbstractDao;
+import pl.zaprogramuj.spring.boot.webapp.dao.PasswordResetTokenDao;
 import pl.zaprogramuj.spring.boot.webapp.domain.password.PasswordResetToken;
-import pl.zaprogramuj.spring.boot.webapp.repository.AbstractDao;
-import pl.zaprogramuj.spring.boot.webapp.repository.PasswordResetTokenDao;
 
 @Repository
 @Scope(scopeName = BeanDefinition.SCOPE_SINGLETON)

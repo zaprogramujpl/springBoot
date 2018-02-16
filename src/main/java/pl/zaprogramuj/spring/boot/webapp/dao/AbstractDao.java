@@ -1,4 +1,4 @@
-package pl.zaprogramuj.spring.boot.webapp.repository;
+package pl.zaprogramuj.spring.boot.webapp.dao;
 
 import java.io.Serializable;
 import java.lang.reflect.ParameterizedType;

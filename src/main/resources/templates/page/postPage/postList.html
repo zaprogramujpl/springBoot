@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html xmlns="http://www.thymeleaf.org" xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity4" layout:decorate="common/layout">
+<head>
+<title>Posts - Webapplication by Zaprogramuj.pl</title>
+<meta charset="utf-8" />
+</head>
+<body>
+	<div layout:fragment="content">
+		<div class="container main-content">
+			<div class="row">
+				<div class="col-md-12" style="border: 1px solid;" th:include="component/post/postListComponent :: postListComponent" th:with="postsTh=${posts}"></div>
+			</div>
+		</div>
+	</div>
+</body>
+</html>

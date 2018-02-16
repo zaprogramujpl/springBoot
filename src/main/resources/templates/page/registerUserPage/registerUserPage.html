@@ -10,7 +10,7 @@
 		<div sec:authorize="isAuthenticated()">Zalogowany</div>
 		<div sec:authorize="isAnonymous()">
 			<div layout:fragment="content">
-				<div class="container">
+				<div class="container main-content">
 					<div class="col-md-8 col-md-offset-2">
 						<div th:replace="component/registration/registerFormComponent :: registerFormComponent"></div>
 					</div>

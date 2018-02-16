@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html xmlns="http://www.thymeleaf.org" xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity4">
+<head>
+<meta charset="utf-8" />
+<title>Post Editor - Webapplication by zaprogramuj.pl</title>
+</head>
+<body>
+	<div th:fragment="postEditor">
+		<form th:object="${postObject}" th:action="@{${adminAddNewPost}}" method="POST">
+			<div class="form-group">
+				<label for="title" th:text="#{post.form.title}"></label>
+				<input type="text" class="form-control" th:field="*{title}" id="title" name="title" />
+			</div>
+			<div class="form-group">
+				<label for="url_address" th:text="#{post.form.urlAddress}"></label>
+				<input type="text" class="form-control" th:field="*{urlAddress}" id="url_address" name="url_address" />
+			</div>
+			<div class="form-group">
+				<label for="desciption" th:text="#{post.form.desciprtion}"></label>
+				<input type="text" class="form-control" th:field="*{description}" id="desciption" name="desciption" />
+			</div>
+			<div class="form-group">
+				<textarea th:field="*{content}" id="tiny"></textarea>
+			</div>
+			<div class="form-group">
+				<button type="submit" class="btn btn-default btn-success" th:text="#{post.form.button.submit}">BUTTON_VALUE</button>
+			</div>
+		</form>
+	</div>
+</body>
+</html>

@@ -11,8 +11,8 @@ import org.springframework.boot.test.autoconfigure.orm.jpa.TestEntityManager;
 import org.springframework.context.annotation.Import;
 import org.springframework.test.context.junit4.SpringRunner;
 
+import pl.zaprogramuj.spring.boot.webapp.dao.UserDao;
 import pl.zaprogramuj.spring.boot.webapp.domain.user.User;
-import pl.zaprogramuj.spring.boot.webapp.repository.UserDao;
 import pl.zaprogramuj.spring.boot.webapp.webapp.configuration.ApplicationContextConfigurationDaoTest;
 
 @RunWith(SpringRunner.class)

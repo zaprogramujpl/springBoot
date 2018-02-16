@@ -37,6 +37,7 @@ import pl.zaprogramuj.spring.boot.webapp.webapp.configuration.ApplicationContext
 @Import(value = { WebSecurityConfig.class, ApplicationContextConfigurationControllerTest.class })
 public class PasswordResetControllerTest
 {
+	//TODO: MKT - to refactor
 	private static final String CONTROLLER_URL = "/reset-password";
 	
 	@Autowired

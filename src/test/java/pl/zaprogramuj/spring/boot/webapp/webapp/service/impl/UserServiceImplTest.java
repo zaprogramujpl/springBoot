@@ -12,10 +12,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringRunner;
 
+import pl.zaprogramuj.spring.boot.webapp.dao.UserDao;
 import pl.zaprogramuj.spring.boot.webapp.domain.user.User;
 import pl.zaprogramuj.spring.boot.webapp.excepotion.user.UserExistsException;
 import pl.zaprogramuj.spring.boot.webapp.excepotion.user.UserNotFoundException;
-import pl.zaprogramuj.spring.boot.webapp.repository.UserDao;
 import pl.zaprogramuj.spring.boot.webapp.service.UserService;
 import pl.zaprogramuj.spring.boot.webapp.webapp.configuration.ApplicationContextConfigurationServiceTest;
 

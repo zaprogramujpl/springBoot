@@ -56,8 +56,6 @@ public class UserProfileControllerTest
 	@Test
 	public void shouldRedirectToLoginPage() throws Exception
 	{
-
-
 		mockMvc.perform(get(CONTROLLER_URL))
 			.andExpect(redirectedUrl(SystemViewsName.REDIRECT_AUTHENTICATION));
 	}

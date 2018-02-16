@@ -1,4 +1,4 @@
-package pl.zaprogramuj.spring.boot.webapp.repository.impl;
+package pl.zaprogramuj.spring.boot.webapp.dao.impl;
 
 import javax.annotation.PostConstruct;
 import javax.persistence.criteria.CriteriaBuilder;
@@ -18,10 +18,10 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.transaction.support.TransactionCallbackWithoutResult;
 import org.springframework.transaction.support.TransactionTemplate;
 
+import pl.zaprogramuj.spring.boot.webapp.dao.AbstractDao;
+import pl.zaprogramuj.spring.boot.webapp.dao.UserRoleDao;
 import pl.zaprogramuj.spring.boot.webapp.domain.user.UserRole;
 import pl.zaprogramuj.spring.boot.webapp.domain.user.UserRoleEnum;
-import pl.zaprogramuj.spring.boot.webapp.repository.AbstractDao;
-import pl.zaprogramuj.spring.boot.webapp.repository.UserRoleDao;
 
 @Repository
 @Scope(scopeName = BeanDefinition.SCOPE_SINGLETON)

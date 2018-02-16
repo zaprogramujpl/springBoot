@@ -5,8 +5,8 @@ import org.springframework.beans.factory.config.BeanDefinition;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Service;
 
+import pl.zaprogramuj.spring.boot.webapp.dao.UserRoleDao;
 import pl.zaprogramuj.spring.boot.webapp.domain.user.UserRole;
-import pl.zaprogramuj.spring.boot.webapp.repository.UserRoleDao;
 import pl.zaprogramuj.spring.boot.webapp.service.UserRoleService;
 
 @Service(value = "userRoleService")

@@ -4,19 +4,26 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
+import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 
+import pl.zaprogramuj.spring.boot.webapp.domain.user.UserRoleEnum;
+
 @Configuration
+@EnableGlobalMethodSecurity(prePostEnabled = true)
 public class WebSecurityConfig extends WebSecurityConfigurerAdapter{
 	
 	private static final String[] MATCHERS = {"/", "/resources/**", "/registration", 
-											  "/login*", "/webjars/**", "/css/**", "/forgot-password**"
-											  ,"/reset-password**"};
+											  "/login*", "/webjars/**", "/css/**" , 
+											  "/js/**", "/img/**", "/forgot-password**"
+											  ,"/reset-password**", "/post**", "/post/**"};
 
+	private static final String[] MATCHERS_ADMIN = { "/admin**", "/admin/**"};
+	
     @Autowired
     private UserDetailsService userDetailsService;
 
@@ -31,6 +38,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter{
         		.csrf().disable()
                 .authorizeRequests()
                     .antMatchers(MATCHERS).permitAll()
+                    .antMatchers(MATCHERS_ADMIN).hasRole(UserRoleEnum.ADMIN.toString())
                     .anyRequest().authenticated()
                     .and()
                 .formLogin()

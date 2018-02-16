@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import pl.zaprogramuj.spring.boot.webapp.domain.form.user.UserProfileForm;
 import pl.zaprogramuj.spring.boot.webapp.domain.user.User;
@@ -25,11 +26,19 @@ public class HomeController extends AbstractController
 	{
 		binder.setValidator(getUserFormValidator());
 	}
+	
+	@ModelAttribute("basicPostUrl")
+	public String basicPostUrl()
+	{
+		return PostController.POST_CONTROLLER_BASIC_POST_URL;
+	}
 
 	@RequestMapping("/")
 	public ModelAndView indexView()
 	{
-		return new ModelAndView(SystemViewsName.INDEX);
+		ModelAndView mnv = new ModelAndView(SystemViewsName.INDEX);
+		mnv.addObject("posts", getPostService().getAllPosts());
+		return mnv;
 	}
 
 	@RequestMapping("/login")
@@ -47,7 +56,7 @@ public class HomeController extends AbstractController
 	}
 
 	@RequestMapping(value = "/registration", method = RequestMethod.POST)
-	public ModelAndView registerUserPOST(@ModelAttribute("userProfileForm") @Validated UserProfileForm userProfileForm, BindingResult bindingResult)
+	public ModelAndView registerUserPOST(@ModelAttribute("userProfileForm") @Validated UserProfileForm userProfileForm, BindingResult bindingResult, RedirectAttributes ra)
 	{
 		ModelAndView mnv = new ModelAndView();
 
@@ -60,7 +69,7 @@ public class HomeController extends AbstractController
 		try
 		{
 			registerUser(userProfileForm);
-			mnv.setViewName(SystemViewsName.INDEX);
+			mnv.setViewName(SystemViewsName.REDIRECT_TO_MAIN_PAGE);
 		} catch (UserExistsException e)
 		{
 			mnv.addObject("userExistError", "userExistError");
