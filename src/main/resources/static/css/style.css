@@ -1,23 +1,74 @@
-
 /*
-	100vh - 100% wysokoœci ekranu
+	100vh - 100% wysokoï¿½ci ekranu
 	100vw - 100% szerokosci ekranu
 */
-body{
+body {
 	min-height: 100vh;
 	position: relative;
 }
 
-form div.alert{
+.main-menu {
+	position: fixed;
+	width: 100%;
+	top: 0;
+	z-index: 1;
+}
+
+.main-content {
+	padding: 60px 0;
+}
+
+a:hover {
+	color: red;
+}
+
+form div.alert {
 	margin-top: 5px;
 }
 
-footer{
-	position: absolute;
-    bottom: 0;
-    width: 100%;
+footer {
+	position: fixed;
+	bottom: 0;
+	width: 100%;
 }
 
-footer .navbar{
+footer .navbar {
 	margin-bottom: 0px;
+}
+
+.post-element {
+	border-bottom: 1px solid #ccc;
+	margin-bottom: 10px;
+	font-family: "Times New Roman", Times, serif;
+}
+
+.post-element img {
+	max-width: 100%;
+}
+
+.post-element-thumbdiv {
+	position: relative;
+	padding: 5px;
+}
+
+.post-element-thumbdiv span {
+	position: absolute;
+	top: 20px;
+	left: 10px;
+}
+
+.post-element-title {
+	font-size: 1.438em;
+	color: #3c3c3c;
+}
+
+.post-element-category-and-date {
+	margin: 3px 0 5px 0;
+}
+
+.post-element-description {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  max-width: 100%;
 }

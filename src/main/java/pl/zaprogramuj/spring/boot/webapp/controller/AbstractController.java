@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import pl.zaprogramuj.spring.boot.webapp.component.LoggedUserInformationComponent;
 import pl.zaprogramuj.spring.boot.webapp.service.EmailService;
 import pl.zaprogramuj.spring.boot.webapp.service.PasswordResetTokenService;
+import pl.zaprogramuj.spring.boot.webapp.service.PostService;
 import pl.zaprogramuj.spring.boot.webapp.service.SystemPropertiesService;
 import pl.zaprogramuj.spring.boot.webapp.service.UserRoleService;
 import pl.zaprogramuj.spring.boot.webapp.service.UserService;
@@ -32,6 +33,9 @@ public abstract class AbstractController
 	
 	@Autowired
 	private EmailService emailService;
+	
+	@Autowired
+	private PostService postService;
 
 	@Autowired
 	private LoggedUserInformationComponent loggedUserInformationComponent;
@@ -58,6 +62,11 @@ public abstract class AbstractController
 	public UserRoleService getUserRoleService()
 	{
 		return userRoleService;
+	}
+
+	public PostService getPostService()
+	{
+		return postService;
 	}
 
 	public Validator getUserFormValidator()

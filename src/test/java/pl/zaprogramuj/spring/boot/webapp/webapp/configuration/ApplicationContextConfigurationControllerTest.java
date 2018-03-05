@@ -9,6 +9,7 @@ import pl.zaprogramuj.spring.boot.webapp.component.LoggedUserInformationComponen
 import pl.zaprogramuj.spring.boot.webapp.component.impl.LoggedUserInformationComponentImpl;
 import pl.zaprogramuj.spring.boot.webapp.service.EmailService;
 import pl.zaprogramuj.spring.boot.webapp.service.PasswordResetTokenService;
+import pl.zaprogramuj.spring.boot.webapp.service.PostService;
 import pl.zaprogramuj.spring.boot.webapp.service.SystemPropertiesService;
 import pl.zaprogramuj.spring.boot.webapp.service.UserRoleService;
 import pl.zaprogramuj.spring.boot.webapp.service.UserService;
@@ -40,6 +41,11 @@ public class ApplicationContextConfigurationControllerTest {
 	@Bean
 	public EmailService mockEmailService() {
 		return Mockito.mock(EmailService.class);
+	}
+	
+	@Bean
+	public PostService mockPostService() {
+		return Mockito.mock(PostService.class);
 	}
 
 	@Bean(name = "userFormValidator")

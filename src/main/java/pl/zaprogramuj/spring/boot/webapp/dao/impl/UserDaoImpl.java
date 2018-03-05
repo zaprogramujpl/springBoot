@@ -1,4 +1,4 @@
-package pl.zaprogramuj.spring.boot.webapp.repository.impl;
+package pl.zaprogramuj.spring.boot.webapp.dao.impl;
 
 import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
@@ -10,9 +10,9 @@ import org.springframework.beans.factory.config.BeanDefinition;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Repository;
 
+import pl.zaprogramuj.spring.boot.webapp.dao.AbstractDao;
+import pl.zaprogramuj.spring.boot.webapp.dao.UserDao;
 import pl.zaprogramuj.spring.boot.webapp.domain.user.User;
-import pl.zaprogramuj.spring.boot.webapp.repository.AbstractDao;
-import pl.zaprogramuj.spring.boot.webapp.repository.UserDao;
 
 @Repository
 @Scope(scopeName = BeanDefinition.SCOPE_SINGLETON)
@@ -52,7 +52,7 @@ public class UserDaoImpl extends AbstractDao<Long, User> implements UserDao
 
 		CriteriaQuery<User> criteriaQuery = builder.createQuery(User.class);
 		Root<User> rootUser = criteriaQuery.from(User.class);
-		criteriaQuery.select(rootUser).where(builder.equal(rootUser.get("username"), username));
+		criteriaQuery.select(rootUser).where(builder.equal(rootUser.get("firstName"), username));
 		Query<User> query = session.createQuery(criteriaQuery);
 
 		return query.getResultList().isEmpty() ? null : query.getSingleResult();

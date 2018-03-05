@@ -1,7 +1,9 @@
 package pl.zaprogramuj.spring.boot.webapp.domain.user;
 
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 import javax.persistence.CascadeType;
@@ -14,6 +16,7 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
+import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
@@ -22,14 +25,12 @@ import org.springframework.security.core.userdetails.UserDetails;
 
 import pl.zaprogramuj.spring.boot.webapp.domain.authority.Authority;
 import pl.zaprogramuj.spring.boot.webapp.domain.password.PasswordResetToken;
+import pl.zaprogramuj.spring.boot.webapp.domain.post.Post;
 
 @Entity
 @Table(name = "USER_PROFILE")
 public class User implements UserDetails
 {
-	/**
-	 * 
-	 */
 	private static final long serialVersionUID = 1L;
 
 	@Id
@@ -49,12 +50,15 @@ public class User implements UserDetails
 	private boolean enabled = true;
 
 	@ManyToMany(fetch = FetchType.EAGER)
-	@JoinTable(name = "USER_PROFILE_ROLE", joinColumns = { @JoinColumn(name = "USER_ID") }, inverseJoinColumns = {
-			@JoinColumn(name = "USER_PROFILE_ID") })
+	@JoinTable(name = "USER_PROFILE_ROLE", joinColumns = { @JoinColumn(name = "ID_USER") }, inverseJoinColumns = {
+			@JoinColumn(name = "ID_USER_ROLE") })
 	private Set<UserRole> roles = new HashSet<>();
 
 	@OneToOne(mappedBy = "user", cascade = CascadeType.ALL)
 	private PasswordResetToken passwordResetToken;
+	
+	@OneToMany(mappedBy = "author")
+	private List<Post> posts;
 
 	public long getId()
 	{
@@ -194,6 +198,18 @@ public class User implements UserDetails
 	public void setPasswordResetToken(PasswordResetToken passwordResetToken)
 	{
 		this.passwordResetToken = passwordResetToken;
+	}
+
+	public List<Post> getPosts()
+	{
+		if(posts == null)
+			posts = new ArrayList<>();
+		return posts;
+	}
+
+	public void setPosts(List<Post> posts)
+	{
+		this.posts = posts;
 	}
 
 	@Override

@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html xmlns="http://www.thymeleaf.org" xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity4">
+<body>
+	<div th:fragment="footer">
+		<div class="navbar navbar-default navbar-bottom">
+			<p class="navbar-text pull-left" th:text="'System Version: ' + ${systemVersion}"></p>
+		</div>
+	</div>
+
+	<div th:fragment="body-bottom-scripts">
+		<script th:src="@{../../../webjars/jquery/3.2.1/jquery.min.js}"></script>
+		<script th:src="@{../../../webjars/bootstrap/3.3.7/js/bootstrap.min.js}"></script>
+		<script th:src="@{../../../webjars/codemirror/5.24.2/lib/codemirror.js}"></script>
+		<script th:src="@{../../../webjars/codemirror/5.24.2/mode/css/css.js}"></script>
+		<script th:src="@{../../../js/adminMenu.js}"></script>
+		
+		<script th:src="@{../../../webjars/tinymce/4.2.1/tinymce.min.js}"></script>
+		<script th:src="@{../../../js/tinyMCEInit.js}"></script>	
+	</div>
+</body>
+</html>

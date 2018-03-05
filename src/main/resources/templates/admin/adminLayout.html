@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html xmlns="http://www.thymeleaf.org" xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity4">
+<header th:replace="admin/header :: admin-header"></header>
+<body>
+	<div th:replace="admin/navbar :: navbar"></div>
+	<div th:if="${error} != null">
+		<div th:text="${error}"></div>
+	</div>
+	<div class="container-fluid main-content">
+		<div class="row">
+			<div class="col-md-2">
+				<div th:include="admin/adminLeftMenu :: adminLeftMenu" th:remove="tag"></div>
+			</div>
+			<div layout:fragment="content" class="col-md-10">
+				<h1>Content</h1>
+			</div>
+		</div>
+	</div>
+	<div th:replace="admin/footer :: body-bottom-scripts"></div>
+	<footer>
+		<div th:replace="admin/footer :: footer"></div>
+	</footer>
+</body>
+</html>

@@ -1,0 +1,13 @@
+<!DOCTYPE html>
+<html xmlns="http://www.thymeleaf.org" xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity4">
+<head>
+<meta charset="utf-8" />
+<title>News Component - Webapplication by zaprogramuj.pl</title>
+</head>
+<body>
+	<div th:fragment="postElement">
+		<p th:utext="${post.content}"></p>
+	</div>
+</body>
+</html>

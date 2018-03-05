@@ -9,11 +9,11 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import pl.zaprogramuj.spring.boot.webapp.dao.UserDao;
 import pl.zaprogramuj.spring.boot.webapp.domain.password.PasswordResetToken;
 import pl.zaprogramuj.spring.boot.webapp.domain.user.User;
 import pl.zaprogramuj.spring.boot.webapp.excepotion.user.UserExistsException;
 import pl.zaprogramuj.spring.boot.webapp.excepotion.user.UserNotFoundException;
-import pl.zaprogramuj.spring.boot.webapp.repository.UserDao;
 import pl.zaprogramuj.spring.boot.webapp.service.UserService;
 
 @Service

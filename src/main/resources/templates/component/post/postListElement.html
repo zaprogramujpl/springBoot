@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html xmlns="http://www.thymeleaf.org" xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity4">
+<head>
+<meta charset="utf-8" />
+<title>Post Element - Webapplication by zaprogramuj.pl</title>
+</head>
+<body>
+	<div th:fragment="postListElement">
+		<div class="post-element">
+			<div class="row">
+				<div class="col-xs-3">
+					<div class="post-element-thumbdiv">
+						<span class="glyphicon glyphicon-comment text-success" th:text="${#lists.size(postTh.comments)}">COMMENTS_SIZE</span>						
+						<img src="/img/book.jpeg">
+					</div>
+				</div>
+				<div class="col-xs-9">
+					<a th:href="@{${basicPostUrl} + '/' + ${postTh.urlAddress}}" class="post-element-title" th:text="${postTh.title}">POST_TITLE</a>
+					<div class="post-element-category-and-date">
+						<div style="display: inline" th:each="category : ${postTh.categories}">
+							<span th:text="${category.name}"></span>
+						</div>
+						<span th:text="${#temporals.format(postTh.creationDate, 'dd-MM-yyyy HH:mm')}">CREATION_DATE</span>
+					</div>
+					<p class="post-element-description" th:text="${postTh.description}"></p>
+				</div>
+			</div>
+		</div>
+	</div>
+</body>
+</html>

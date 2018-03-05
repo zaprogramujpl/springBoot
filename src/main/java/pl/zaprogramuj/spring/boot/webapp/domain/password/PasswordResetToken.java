@@ -28,6 +28,7 @@ public class PasswordResetToken {
 	@OneToOne
 	private User user;
 	
+	//TODO:MichalK - to change on LocalDateTime
 	@Column(nullable = false)
 	private Date expiryDate;
 
