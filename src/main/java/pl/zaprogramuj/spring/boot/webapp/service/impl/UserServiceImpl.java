@@ -114,9 +114,8 @@ public class UserServiceImpl implements UserService{
 		{
 			throw new UserNotFoundException(updatedUserEmail);
 		}
-		user.setFirstName(userInformation.getFirstName());
+		user.setUserName(userInformation.getUserName());
 		user.setEmailAddress(userInformation.getEmailAddress());
-		user.setLastName(userInformation.getLastName());
 		user.setPhone(userInformation.getPhone());
 		return user;
 	}

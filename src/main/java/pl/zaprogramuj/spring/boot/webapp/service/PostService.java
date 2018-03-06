@@ -14,4 +14,5 @@ public interface PostService
 	public abstract Post getPostByUrlAddress(String urlAddress) throws PostNotFoundException;
 	public abstract List<Post> getAllPosts();
 	public abstract List<Post> getPostsByAuthorId();
+	public abstract boolean isPostWithUrlAddress(String urlAddress);
 }

@@ -52,7 +52,7 @@ public class UserDaoImpl extends AbstractDao<Long, User> implements UserDao
 
 		CriteriaQuery<User> criteriaQuery = builder.createQuery(User.class);
 		Root<User> rootUser = criteriaQuery.from(User.class);
-		criteriaQuery.select(rootUser).where(builder.equal(rootUser.get("firstName"), username));
+		criteriaQuery.select(rootUser).where(builder.equal(rootUser.get("userName"), username));
 		Query<User> query = session.createQuery(criteriaQuery);
 
 		return query.getResultList().isEmpty() ? null : query.getSingleResult();

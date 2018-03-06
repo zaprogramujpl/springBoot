@@ -8,6 +8,7 @@ import org.springframework.web.bind.annotation.InitBinder;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
@@ -19,9 +20,12 @@ import pl.zaprogramuj.spring.boot.webapp.excepotion.user.UserExistsException;
 import pl.zaprogramuj.spring.boot.webapp.util.SystemViewsName;
 
 @Controller
+@RequestMapping(value = HomeController.BASIC_MAPPING)
 public class HomeController extends AbstractController
-{
-	@InitBinder
+{	
+	public static final String BASIC_MAPPING = "/";
+	
+	@InitBinder("userProfileForm")
 	private void initBinding(WebDataBinder binder)
 	{
 		binder.setValidator(getUserFormValidator());
@@ -30,13 +34,18 @@ public class HomeController extends AbstractController
 	@ModelAttribute("basicPostUrl")
 	public String basicPostUrl()
 	{
-		return PostController.POST_CONTROLLER_BASIC_POST_URL;
+		return PostController.BASIC_POST_URL;
 	}
 
-	@RequestMapping("/")
-	public ModelAndView indexView()
+	@RequestMapping
+	public ModelAndView indexView(@RequestParam(value = "edit", required = false) String postEditView)
 	{
-		ModelAndView mnv = new ModelAndView(SystemViewsName.INDEX);
+		ModelAndView mnv = null;
+		
+		mnv = getLoggedUserInformationComponent().userHasRole("ROLE_" + UserRoleEnum.ADMIN.toString())	&& Boolean.TRUE.toString().equals(postEditView) 
+				? new ModelAndView(SystemViewsName.EDIT_INDEX)
+				: new ModelAndView(SystemViewsName.INDEX);
+		
 		mnv.addObject("posts", getPostService().getAllPosts());
 		return mnv;
 	}

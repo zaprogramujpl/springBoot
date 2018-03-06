@@ -52,6 +52,7 @@ public class AdminPostController extends AbstractAdminController
 			getPostService().addPost(post);
 		} catch (PostException e)
 		{
+			e.printStackTrace();
 			LOGGER.error("Post Exception: " + e.getMessage());
 			return mnv;
 		}

@@ -7,7 +7,9 @@ import org.springframework.validation.Validator;
 
 import pl.zaprogramuj.spring.boot.webapp.component.LoggedUserInformationComponent;
 import pl.zaprogramuj.spring.boot.webapp.component.impl.LoggedUserInformationComponentImpl;
+import pl.zaprogramuj.spring.boot.webapp.domain.page.PageCharacteristics;
 import pl.zaprogramuj.spring.boot.webapp.service.EmailService;
+import pl.zaprogramuj.spring.boot.webapp.service.PageCharacteristicsService;
 import pl.zaprogramuj.spring.boot.webapp.service.PasswordResetTokenService;
 import pl.zaprogramuj.spring.boot.webapp.service.PostService;
 import pl.zaprogramuj.spring.boot.webapp.service.SystemPropertiesService;
@@ -46,6 +48,12 @@ public class ApplicationContextConfigurationControllerTest {
 	@Bean
 	public PostService mockPostService() {
 		return Mockito.mock(PostService.class);
+	}
+	
+	@Bean
+	public PageCharacteristicsService mockPageCharacteristicsService()
+	{
+		return Mockito.mock(PageCharacteristicsService.class);
 	}
 
 	@Bean(name = "userFormValidator")

@@ -30,7 +30,7 @@ public class PostServiceImpl implements PostService
 		if(post.getUrlAddress() == null || post.getUrlAddress().isEmpty())
 			throw new PostException(PostException.EMPTY_OR_NULL_URL_ADDRESS);
 		
-		if(getPostByUrlAddress(post.getUrlAddress()) != null)
+		if(isPostWithUrlAddress(post.getUrlAddress()))
 			throw new PostExistException("There is already a post with an " + post.getUrlAddress() + " url address.");
 		
 		postDao.addPost(post);
@@ -73,8 +73,14 @@ public class PostServiceImpl implements PostService
 		Post post = postDao.findByUrlAddress(urlAddress);
 		
 		if(post == null)
-			throw new PostNotFoundException("");
+			throw new PostNotFoundException(urlAddress);
 		
 		return postDao.findByUrlAddress(urlAddress);
+	}
+
+	@Override
+	public boolean isPostWithUrlAddress(String urlAddress)
+	{
+		return postDao.findByUrlAddress(urlAddress) != null;
 	}	
 }

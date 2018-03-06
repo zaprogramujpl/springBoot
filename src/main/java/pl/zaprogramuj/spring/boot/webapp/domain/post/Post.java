@@ -42,7 +42,6 @@ public class Post
 	@Column(unique = true)
 	private String urlAddress;
 
-	private String additionalCSS;
 
 	private LocalDateTime creationDate;
 
@@ -131,16 +130,6 @@ public class Post
 	public void setAuthor(User author)
 	{
 		this.author = author;
-	}
-
-	public String getAdditionalCSS()
-	{
-		return additionalCSS;
-	}
-
-	public void setAdditionalCSS(String additionalCSS)
-	{
-		this.additionalCSS = additionalCSS;
 	}
 
 	public List<Comment> getComments()

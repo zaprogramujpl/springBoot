@@ -39,10 +39,8 @@ public class User implements UserDetails
 	private long id;
 	@Column(name = "LOGIN", unique = true)
 	private String login;
-	private String username;
+	private String userName;
 	private String password;
-	private String firstName;
-	private String lastName;
 
 	@Column(name = "EMAIL", nullable = false)
 	private String emailAddress;
@@ -70,14 +68,14 @@ public class User implements UserDetails
 		this.id = id;
 	}
 
-	public String getUsername()
+	public String getUserName()
 	{
-		return username;
+		return userName;
 	}
 
-	public void setUsername(String username)
+	public void setUserName(String userName)
 	{
-		this.username = username;
+		this.userName = userName;
 	}
 
 	public String getPassword()
@@ -100,25 +98,6 @@ public class User implements UserDetails
 		this.login = login;
 	}
 
-	public String getFirstName()
-	{
-		return firstName;
-	}
-
-	public void setFirstName(String firstName)
-	{
-		this.firstName = firstName;
-	}
-
-	public String getLastName()
-	{
-		return lastName;
-	}
-
-	public void setLastName(String lastName)
-	{
-		this.lastName = lastName;
-	}
 
 	public String getEmailAddress()
 	{
@@ -215,8 +194,14 @@ public class User implements UserDetails
 	@Override
 	public String toString()
 	{
-		return "User [Login=" + login + ", username=" + username + ", password= *****, firstName=" + firstName + ", lastName=" + lastName + ", emailAddress=" + emailAddress + ", phone="
-				+ phone + ", enabled=" + enabled + ", roles=" + roles + "]";
+		return "User [id=" + id + ", login=" + login + ", userName=" + userName + ", password=" + "XXXXXX"
+				+ ", emailAddress=" + emailAddress + ", phone=" + phone + ", enabled=" + enabled + ", roles=" + roles
+				+ ", passwordResetToken=" + passwordResetToken + ", posts=" + posts + "]";
 	}
 
+	@Override
+	public String getUsername()
+	{
+		return getUserName();
+	}
 }
