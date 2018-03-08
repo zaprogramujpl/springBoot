@@ -1,9 +1,12 @@
 package pl.zaprogramuj.spring.boot.webapp.controller.admin;
 
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
 
+import pl.zaprogramuj.spring.boot.webapp.domain.page.PageCharacteristics;
 import pl.zaprogramuj.spring.boot.webapp.util.SystemViewsName;
 
 @Controller
@@ -11,10 +14,18 @@ import pl.zaprogramuj.spring.boot.webapp.util.SystemViewsName;
 public class AdminHomeController extends AbstractAdminController
 {
 	public static final String BASIC_ADMIN_MAPPING = "/admin";
-	
+	public static final String UPDATE_PAGE_CHARACTERISTICS_MAPPING = "/updateCSS";
 	@RequestMapping
 	public ModelAndView mainAdminPage()
 	{
 		return new ModelAndView(SystemViewsName.ADMIN_INDEX_PAGE);
+	}
+	
+	@PostMapping(value = UPDATE_PAGE_CHARACTERISTICS_MAPPING)
+	public ModelAndView updatePageCss(@ModelAttribute("pageCharacteristics") PageCharacteristics pageCharacteristics)
+	{
+		getPageCharacteristics().saveOrUpdatePageCharacteristics(pageCharacteristics);
+
+		return new ModelAndView("redirect:" + pageCharacteristics.getUriAddress());
 	}
 }

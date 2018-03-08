@@ -25,7 +25,7 @@ public class PasswordForgotController extends AbstractController
 {
 	private static final Logger LOGGER = LoggerFactory.getLogger(PasswordForgotController.class);
 	
-	@InitBinder
+	@InitBinder("forgotPasswordForm")
 	private void initBinding(WebDataBinder binder)
 	{
 		binder.setValidator(getForgotPasswordFormValidator());

@@ -37,13 +37,13 @@ public class UserDaoImplTest {
     public void shouldReturnUser()
     {
         User user = new User();
-        user.setUsername("testUser");
+        user.setUserName("testUser");
         user.setEmailAddress("testEmail");
 
         entityManager.persist(user);
 
-        User daoUser = userDao.findByName(user.getName());
-        assertEquals(user.getName(), daoUser.getName());
+        User daoUser = userDao.findByName(user.getUsername());
+        assertEquals(user.getUsername(), daoUser.getUsername());
     }
 }
 

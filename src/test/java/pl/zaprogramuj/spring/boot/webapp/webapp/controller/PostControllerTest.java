@@ -51,8 +51,7 @@ public class PostControllerTest
 	@Test
 	public void shouldReturnPostsPage() throws Exception
 	{
-
-		mockMvc.perform(get(PostController.POST_CONTROLLER_MAIN_MAPPING))
+		mockMvc.perform(get(PostController.MAIN_MAPPING))
 				.andExpect(view().name(SystemViewsName.POST_LIST_PAGE))
 				.andExpect(model().attributeExists("posts", "basicPostUrl"));
 	}
@@ -61,8 +60,8 @@ public class PostControllerTest
 	@WithMockUser(roles = "ADMIN")
 	public void shouldReturnPostPageAdminVersionIfUserHasRoleAdminAndRequestParamIsTrue() throws Exception
 	{
-		String publishedExamplePostUrl = PostController.POST_CONTROLLER_MAIN_MAPPING
-				+ PostController.POST_CONTROLLER_PUBLISHED_POST + "/testPost";
+		String publishedExamplePostUrl = PostController.MAIN_MAPPING
+				+ PostController.PUBLISHED_POST + "/testPost";
 
 		when(mockLoggedUserinformationComponent.userHasRole("ROLE_" + UserRoleEnum.ADMIN.toString())).thenReturn(true);
 
@@ -74,8 +73,8 @@ public class PostControllerTest
 	@WithMockUser(roles = "NO_ADMIN_ROLE")
 	public void shouldReturnHttpStatus403IfUserDoesNotHaveRoleAdminTriesToAddPost() throws Exception
 	{
-		String addPostUrl = PostController.POST_CONTROLLER_MAIN_MAPPING
-				+ PostController.POST_CONTROLLER_ADD_POST_MAPPING;
+		String addPostUrl = PostController.MAIN_MAPPING
+				+ PostController.ADD_POST_MAPPING;
 
 		mockMvc.perform(get(addPostUrl)).andExpect(status().isForbidden());
 	}
@@ -83,8 +82,8 @@ public class PostControllerTest
 	@Test
 	public void shouldReturnPostPageWithPostObjectModel() throws Exception
 	{
-		String publishedExamplePostUrl = PostController.POST_CONTROLLER_MAIN_MAPPING
-				+ PostController.POST_CONTROLLER_PUBLISHED_POST + "/testPost";
+		String publishedExamplePostUrl = PostController.MAIN_MAPPING
+				+ PostController.PUBLISHED_POST + "/testPost";
 
 		Post mockPost = Mockito.mock(Post.class);
 		
@@ -92,14 +91,5 @@ public class PostControllerTest
 		
 		mockMvc.perform(get(publishedExamplePostUrl)).andExpect(status().isOk())
 				.andExpect(model().attributeExists("post")).andExpect(view().name(SystemViewsName.POST_PAGE));
-	}
-
-	//TODO: How to test Advice Controller
-	public void shoulrRedirectToPostExceptionHandlerIfPostIsNotExists() throws Exception
-	{
-		Post mockPost = Mockito.mock(Post.class);
-		
-		when(mockPost.getUrlAddress()).thenReturn("testPost");
-		when(postService.getPostByUrlAddress("testPost")).thenThrow(new PostNotFoundException("testPost"));
 	}
 }

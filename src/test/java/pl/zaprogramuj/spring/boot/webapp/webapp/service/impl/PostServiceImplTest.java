@@ -97,4 +97,12 @@ public class PostServiceImplTest
 		
 		postService.addPost(postMock);
 	}
+	
+	@Test
+	public void shouldReturnTrueIfExistsPostWithSameUrl()
+	{
+		when(mockDao.findByUrlAddress("urlAddress")).thenReturn(Mockito.mock(Post.class));
+		
+		assertTrue(postService.isPostWithUrlAddress("urlAddress"));
+	}
 }

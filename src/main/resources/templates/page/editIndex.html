@@ -2,18 +2,22 @@
 <html xmlns="http://www.thymeleaf.org" xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
 	xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity4" layout:decorate="common/layout">
 <head>
-<title>Post - Webapplication by Zaprogramuj.pl</title>
-<meta charset="utf-8" />
-<style id="pageStyle" type="text/css">
-</style>
+<style id="pageStyle" type="text/css"></style>
 </head>
 <body>
 	<div layout:fragment="content">
 		<div id="adminMenu" class="wrapper">
 			<div th:include="admin/adminPageMenuNavbar :: adminPageMenuNavbar" th:remove="tag"></div>
-			<!-- Page Content Holder -->
+
 			<div id="content" class="container">
-				<div th:include="component/post/postElement :: postElement" th:remove="tag"></div>
+				<div class="row">
+					<div class="col-md-9" style="border: 1px solid;">
+						<div th:include="component/post/postListComponent :: postListComponent" th:with="postsTh=${posts}"></div>
+					</div>
+					<div class="col-md-3">
+						<p>Post Category Component - WIP</p>
+					</div>
+				</div>
 			</div>
 		</div>
 		<div>

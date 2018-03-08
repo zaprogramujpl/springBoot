@@ -106,8 +106,7 @@ public class UserServiceImplTest {
 		//given
 		User userInformation = new User();
 		userInformation.setEmailAddress("emailAddress");
-		userInformation.setFirstName("firstName");
-		userInformation.setLastName("lastName");
+		userInformation.setUserName("userName");
 		userInformation.setPhone("phonenumber");
 		userInformation.setPassword("password");
 		User repositoryUser = new User();
@@ -118,8 +117,7 @@ public class UserServiceImplTest {
 
 		//then
 		User updatedUser = userService.updateUser("emailAddress", userInformation);
-		assertEquals(userInformation.getFirstName(), updatedUser.getFirstName());
-		assertEquals(userInformation.getLastName(), updatedUser.getLastName());
+		assertEquals(userInformation.getUsername(), updatedUser.getUsername());
 		assertEquals(userInformation.getPhone(), updatedUser.getPhone());
 	}
 	// Test for method : updateUser [END]

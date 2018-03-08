@@ -21,14 +21,9 @@
 							<div th:if="${#fields.hasErrors('login')}" th:errors="*{login}" class="alert alert-danger col-sm-12 col-lg-12 col-xs-12">Name Error</div>
 						</div>
 						<div class="col-md-12">
-							<label class="col-md-12" th:inline="text">[[#{userForm.label.firstName}]]:</label> <input type="text" th:field="*{firstName}" placeholder=""
+							<label class="col-md-12" th:inline="text">[[#{userForm.label.userName}]]:</label> <input type="text" th:field="*{userName}" placeholder=""
 								class="form-control col-md-6 col-sm-6 col-lg-6 col-xs-6"></input>
-							<div th:if="${#fields.hasErrors('firstName')}" th:errors="*{firstName}" class="alert alert-danger col-sm-12 col-lg-12 col-xs-12">Name Error</div>
-						</div>
-						<div class="col-md-12">
-							<label class="col-md-12" th:inline="text">[[#{userForm.label.lastName}]]:</label> <input type="text" th:field="*{lastName}" placeholder=""
-								class="form-control col-md-6 col-sm-6 col-lg-6 col-xs-6"></input>
-							<div th:if="${#fields.hasErrors('lastName')}" th:errors="*{lastName}" class="alert alert-danger col-sm-12 col-lg-12 col-xs-12">Name Error</div>
+							<div th:if="${#fields.hasErrors('userName')}" th:errors="*{userName}" class="alert alert-danger col-sm-12 col-lg-12 col-xs-12">Name Error</div>
 						</div>
 						<div class="col-md-12">
 							<label class="col-md-12" th:inline="text">[[#{userForm.label.emailAddress}]]:</label> <input type="text" th:field="*{emailAddress}" placeholder=""

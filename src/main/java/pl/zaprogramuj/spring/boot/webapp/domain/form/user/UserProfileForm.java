@@ -4,10 +4,8 @@ import pl.zaprogramuj.spring.boot.webapp.domain.user.User;
 
 public class UserProfileForm {
 	private String login;
-
-	private String firstName;
-
-	private String lastName;
+	
+	private String userName;
 
 	private String emailAddress;
 
@@ -23,20 +21,14 @@ public class UserProfileForm {
 		this.login = login;
 	}
 
-	public String getFirstName() {
-		return firstName;
+	public String getUserName()
+	{
+		return userName;
 	}
 
-	public void setFirstName(String firstName) {
-		this.firstName = firstName;
-	}
-
-	public String getLastName() {
-		return lastName;
-	}
-
-	public void setLastName(String lastName) {
-		this.lastName = lastName;
+	public void setUserName(String userName)
+	{
+		this.userName = userName;
 	}
 
 	public String getEmailAddress() {
@@ -65,7 +57,7 @@ public class UserProfileForm {
 
 	public User getUser() {
 		User user = new User();
-		user.setFirstName(this.firstName);
+		user.setUserName(this.userName);
 		user.setLogin(this.login);
 		user.setPassword(this.getPassword());
 		user.setEmailAddress(this.emailAddress);

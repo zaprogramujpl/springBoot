@@ -6,10 +6,6 @@
 <body>
 	<div layout:fragment="content">
 		<div class="container main-content">
-			<div class="jumbotron">
-				<h1>Hello World!</h1>
-				<p>Spring Boot Application - zaprogramuj.pl</p>
-			</div>
 			<div class="row">
 				<div class="col-md-9" style="border: 1px solid;">
 					<div th:include="component/post/postListComponent :: postListComponent" th:with="postsTh=${posts}"></div>

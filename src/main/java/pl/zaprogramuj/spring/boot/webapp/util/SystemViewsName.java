@@ -2,6 +2,8 @@ package pl.zaprogramuj.spring.boot.webapp.util;
 
 public final class SystemViewsName {
 	public static final String INDEX = "page/index";
+	public static final String EDIT_INDEX = "page/editIndex";
+	
 	public static final String REGISTER_USER = "page/registerUserPage/registerUserPage";
 	public static final String LOGIN_PAGE = "page/loginPage/loginPage";
 	public static final String USER_PROFILE = "page/userProfilePage/userProfilePage";

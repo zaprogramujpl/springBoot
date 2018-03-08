@@ -6,9 +6,11 @@ public class PostNotFoundException extends PostException
 	
 	private static final String NOT_FOUND_POST_WITH_ID = "Not found Post with id: ";
 	
-	public PostNotFoundException(String message)
+	public static final String NOT_FOUND_POST_WITH_URL_ADDRESS = "Not found Post with urlAddress: ";
+	
+	public PostNotFoundException(String urlAddress)
 	{
-		super(message);
+		super(NOT_FOUND_POST_WITH_URL_ADDRESS + urlAddress);
 	}
 	
 	public PostNotFoundException(long id)
