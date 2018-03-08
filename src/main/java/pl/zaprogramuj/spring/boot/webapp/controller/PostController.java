@@ -1,6 +1,5 @@
 package pl.zaprogramuj.spring.boot.webapp.controller;
 
-import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
@@ -20,7 +19,6 @@ public class PostController extends AbstractController
 {
 
 	public static final String MAIN_MAPPING = "/post";
-	public static final String ADD_POST_MAPPING = "/add";
 	public static final String PUBLISHED_POST = "/published";
 	public static final String BASIC_POST_URL = MAIN_MAPPING
 			+ PUBLISHED_POST;
@@ -32,20 +30,16 @@ public class PostController extends AbstractController
 	}
 
 	@GetMapping
-	public ModelAndView postsPage()
+	public ModelAndView postsPage(@RequestParam(value = "edit", required = false) String postEditView)
 	{
-		ModelAndView mnv = new ModelAndView(SystemViewsName.POST_LIST_PAGE);
+		ModelAndView mnv = null;
+		mnv = getLoggedUserInformationComponent().userHasRole("ROLE_" + UserRoleEnum.ADMIN.toString())	&& Boolean.TRUE.toString().equals(postEditView) 
+				? new ModelAndView(SystemViewsName.EDIT_POST_LIST_PAGE)
+				: new ModelAndView(SystemViewsName.POST_LIST_PAGE);
 
 		mnv.addObject("posts", getPostService().getAllPosts());
 		mnv.addObject("postsPage", true);
 		return mnv;
-	}
-
-	@GetMapping(value = ADD_POST_MAPPING)
-	@PreAuthorize("hasRole('ROLE_ADMIN')")
-	public ModelAndView addPostGET()
-	{
-		return new ModelAndView(SystemViewsName.INDEX);
 	}
 	
 	@GetMapping(value = PUBLISHED_POST + "/{postUrlAddress}")

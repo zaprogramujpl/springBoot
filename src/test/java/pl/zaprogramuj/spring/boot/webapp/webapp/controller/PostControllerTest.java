@@ -53,6 +53,17 @@ public class PostControllerTest
 				.andExpect(view().name(SystemViewsName.POST_LIST_PAGE))
 				.andExpect(model().attributeExists("posts", "basicPostUrl"));
 	}
+	
+	@Test
+	@WithMockUser(roles = "ADMIN")
+	public void shouldReturnEditPostsPage() throws Exception
+	{
+		
+		when(mockLoggedUserinformationComponent.userHasRole("ROLE_" + UserRoleEnum.ADMIN.toString())).thenReturn(true);
+
+		mockMvc.perform(get(PostController.MAIN_MAPPING).param("edit", "true"))
+				.andExpect(view().name(SystemViewsName.EDIT_POST_LIST_PAGE));
+	}
 
 	@Test
 	@WithMockUser(roles = "ADMIN")
@@ -65,16 +76,6 @@ public class PostControllerTest
 
 		mockMvc.perform(get(publishedExamplePostUrl).param("edit", "true"))
 				.andExpect(view().name(SystemViewsName.EDIT_POST_PAGE));
-	}
-
-	@Test
-	@WithMockUser(roles = "NO_ADMIN_ROLE")
-	public void shouldReturnHttpStatus403IfUserDoesNotHaveRoleAdminTriesToAddPost() throws Exception
-	{
-		String addPostUrl = PostController.MAIN_MAPPING
-				+ PostController.ADD_POST_MAPPING;
-
-		mockMvc.perform(get(addPostUrl)).andExpect(status().isForbidden());
 	}
 
 	@Test

@@ -8,7 +8,9 @@ public final class SystemViewsName {
 	public static final String LOGIN_PAGE = "page/loginPage/loginPage";
 	public static final String USER_PROFILE = "page/userProfilePage/userProfilePage";
 	
-	public static final String POST_LIST_PAGE = "page/postPage/postList";
+	public static final String POST_LIST_PAGE = "page/postPage/postListPage";
+	public static final String EDIT_POST_LIST_PAGE = "page/postPage/editPostListPage";
+	
 	public static final String POST_PAGE = "page/postPage/postPage";
 	public static final String EDIT_POST_PAGE = "page/postPage/editPostPage";
 
