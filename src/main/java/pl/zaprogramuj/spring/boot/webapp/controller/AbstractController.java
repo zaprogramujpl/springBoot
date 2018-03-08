@@ -66,7 +66,7 @@ public abstract class AbstractController
 	@ModelAttribute("updatePageCss")
 	public String getUpdatePageCssURL()
 	{
-		return AdminHomeController.BASIC_ADMIN_MAPPING + AdminHomeController.UPDATE_PAGE_CHARACTERISTICS_MAPPING;
+		return AdminHomeController.BASIC_MAPPING + AdminHomeController.UPDATE_PAGE_CHARACTERISTICS_MAPPING;
 	}
 	
 	@ModelAttribute("pageCharacteristics")

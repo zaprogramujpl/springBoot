@@ -23,6 +23,7 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.test.web.servlet.MockMvc;
 
 import pl.zaprogramuj.spring.boot.webapp.configuration.WebSecurityConfig;
+import pl.zaprogramuj.spring.boot.webapp.controller.PasswordResetController;
 import pl.zaprogramuj.spring.boot.webapp.domain.form.password.PasswordResetForm;
 import pl.zaprogramuj.spring.boot.webapp.domain.password.PasswordResetToken;
 import pl.zaprogramuj.spring.boot.webapp.domain.user.User;
@@ -36,10 +37,7 @@ import pl.zaprogramuj.spring.boot.webapp.webapp.configuration.ApplicationContext
 @WebMvcTest
 @Import(value = { WebSecurityConfig.class, ApplicationContextConfigurationControllerTest.class })
 public class PasswordResetControllerTest
-{
-	//TODO: MKT - to refactor
-	private static final String CONTROLLER_URL = "/reset-password";
-	
+{	
 	@Autowired
 	private MockMvc mockMvc;
 
@@ -67,7 +65,7 @@ public class PasswordResetControllerTest
 
 		when(mockPasswordResetTokenService.findByToken(urlParamTokenValue)).thenReturn(token);
 
-		mockMvc.perform(get(CONTROLLER_URL).param("token", urlParamTokenValue))
+		mockMvc.perform(get(PasswordResetController.BASE_MAPPING).param("token", urlParamTokenValue))
 				.andExpect(status().isOk())
 				.andExpect(view().name(SystemViewsName.PASSWORD_RESET))
 				.andExpect(model().attribute("token", token.getToken()));
@@ -79,7 +77,7 @@ public class PasswordResetControllerTest
 	@Test	
 	public void shouldReturnResetPasswordPage() throws Exception
 	{       
-		mockMvc.perform(get(CONTROLLER_URL))
+		mockMvc.perform(get(PasswordResetController.BASE_MAPPING))
 				.andExpect(status().isOk())
 				.andExpect(view().name(SystemViewsName.PASSWORD_RESET));
 	}
@@ -89,7 +87,7 @@ public class PasswordResetControllerTest
 	{
 		when(mockPasswordResetTokenService.findByToken("token")).thenReturn(null);
 
-		mockMvc.perform(get(CONTROLLER_URL))
+		mockMvc.perform(get(PasswordResetController.BASE_MAPPING))
 				.andExpect(status().isOk())
 				.andExpect(model().attributeExists("errorResetPasswordToken"));
 	}
@@ -101,7 +99,7 @@ public class PasswordResetControllerTest
 
 		when(token.isExpired()).thenReturn(true);
 
-		mockMvc.perform(get(CONTROLLER_URL))
+		mockMvc.perform(get(PasswordResetController.BASE_MAPPING))
 				.andExpect(status().isOk())
 				.andExpect(model().attributeExists("errorResetPasswordToken"));
 	}
@@ -119,7 +117,7 @@ public class PasswordResetControllerTest
 		when(form.getToken()).thenReturn("tokenValue");
 		when(mockPasswordResetTokenService.findByToken(form.getToken())).thenReturn(token);
 		
-		mockMvc.perform(post(CONTROLLER_URL).flashAttr("passwordResetForm", form))
+		mockMvc.perform(post(PasswordResetController.BASE_MAPPING).flashAttr("passwordResetForm", form))
 				.andExpect(view().name("redirect:/login"));	
 		
 		verify(mockPasswordResetTokenService, times(1)).deleteToken(token);
@@ -133,8 +131,8 @@ public class PasswordResetControllerTest
 		when(form.getToken()).thenReturn("tokenValue");
 		when(mockPasswordResetTokenService.findByToken(form.getToken())).thenReturn(null);
 		
-		mockMvc.perform(post(CONTROLLER_URL).flashAttr("passwordResetForm", form))
-				.andExpect(view().name("redirect:" + CONTROLLER_URL + "?token=" + form.getToken()));
+		mockMvc.perform(post(PasswordResetController.BASE_MAPPING).flashAttr("passwordResetForm", form))
+				.andExpect(view().name("redirect:" + PasswordResetController.BASE_MAPPING + "?token=" + form.getToken()));
 	}
 		
 	@Test
@@ -152,7 +150,7 @@ public class PasswordResetControllerTest
 		when(mockPasswordResetTokenService.findByToken(form.getToken())).thenReturn(token);
 		doThrow(new UserNotFoundException("userEmail")).when(userService).updateUserPassword(user, formPassword);
 		
-		mockMvc.perform(post(CONTROLLER_URL).flashAttr("passwordResetForm", form))
-			.andExpect(redirectedUrl(CONTROLLER_URL+ "?token=" + form.getToken()));
+		mockMvc.perform(post(PasswordResetController.BASE_MAPPING).flashAttr("passwordResetForm", form))
+			.andExpect(redirectedUrl(PasswordResetController.BASE_MAPPING+ "?token=" + form.getToken()));
 	}
 }

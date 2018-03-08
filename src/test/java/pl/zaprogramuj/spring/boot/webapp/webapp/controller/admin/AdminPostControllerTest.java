@@ -39,7 +39,7 @@ public class AdminPostControllerTest
 	@WithMockUser(roles = "ADMIN")
 	public void shouldReturnAdminPostPageView() throws Exception
 	{
-		mockMvc.perform(get(AdminPostController.BASIC_ADMIN_POST_MAPPING))
+		mockMvc.perform(get(AdminPostController.BASIC_MAPPING))
 				.andExpect(status().isOk()).andExpect(view().name(SystemViewsName.ADMIN_POSTS_PAGE));
 	}
 	
@@ -47,7 +47,7 @@ public class AdminPostControllerTest
 	@WithMockUser(roles = "ADMIN")
 	public void shouldReturnErrorIfExistPostWithSameUrlAddress() throws Exception
 	{
-		String addPostPOST = AdminPostController.BASIC_ADMIN_POST_MAPPING + AdminPostController.ADMIN_MENU_POST_MANAGEMENT_ADD_POST;
+		String addPostPOST = AdminPostController.BASIC_MAPPING + AdminPostController.ADMIN_MENU_POST_MANAGEMENT_ADD_POST;
 		Post postMock = Mockito.mock(Post.class);
 		
 		doThrow(new PostExistException("urlAddress")).when(mockPostService).addPost(postMock);
@@ -60,10 +60,10 @@ public class AdminPostControllerTest
 	@WithMockUser(roles = "ADMIN")
 	public void shouldRedirectToPostsPageAfterAddPost() throws Exception
 	{
-		String addPostPOST = AdminPostController.BASIC_ADMIN_POST_MAPPING + AdminPostController.ADMIN_MENU_POST_MANAGEMENT_ADD_POST;
+		String addPostPOST = AdminPostController.BASIC_MAPPING + AdminPostController.ADMIN_MENU_POST_MANAGEMENT_ADD_POST;
 		Post postMock = Mockito.mock(Post.class);
 		
 		mockMvc.perform(post(addPostPOST).flashAttr("postObject", postMock))
-			.andExpect(view().name("redirect:" + AdminPostController.BASIC_ADMIN_POST_MAPPING));
+			.andExpect(view().name("redirect:" + AdminPostController.BASIC_MAPPING));
 	}
 }
