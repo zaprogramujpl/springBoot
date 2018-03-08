@@ -22,10 +22,12 @@ import pl.zaprogramuj.spring.boot.webapp.excepotion.user.UserNotFoundException;
 import pl.zaprogramuj.spring.boot.webapp.util.SystemViewsName;
 
 @Controller
-@RequestMapping(value = "/reset-password")
+@RequestMapping(value = PasswordResetController.BASE_MAPPING)
 public class PasswordResetController extends AbstractController
 {
 	private static final Logger LOGGER = LoggerFactory.getLogger(PasswordResetController.class);
+	
+	public static final String BASE_MAPPING = "/reset-password";
 	
 	@ModelAttribute("passwordResetForm")
 	public PasswordResetForm passwordResetForm()

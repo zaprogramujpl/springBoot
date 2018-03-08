@@ -24,6 +24,7 @@ import org.springframework.test.web.servlet.MockMvc;
 
 import pl.zaprogramuj.spring.boot.webapp.component.LoggedUserInformationComponent;
 import pl.zaprogramuj.spring.boot.webapp.configuration.WebSecurityConfig;
+import pl.zaprogramuj.spring.boot.webapp.controller.UserProfileController;
 import pl.zaprogramuj.spring.boot.webapp.domain.user.User;
 import pl.zaprogramuj.spring.boot.webapp.excepotion.user.UserNotFoundException;
 import pl.zaprogramuj.spring.boot.webapp.service.UserService;
@@ -35,8 +36,6 @@ import pl.zaprogramuj.spring.boot.webapp.webapp.configuration.ApplicationContext
 @Import(value = { WebSecurityConfig.class, ApplicationContextConfigurationControllerTest.class })
 public class UserProfileControllerTest
 {
-	private static final String CONTROLLER_URL = "/profile";
-
 	@Autowired
 	private MockMvc mockMvc;
 	
@@ -56,7 +55,7 @@ public class UserProfileControllerTest
 	@Test
 	public void shouldRedirectToLoginPage() throws Exception
 	{
-		mockMvc.perform(get(CONTROLLER_URL))
+		mockMvc.perform(get(UserProfileController.BASE_MAPPING))
 			.andExpect(redirectedUrl(SystemViewsName.REDIRECT_AUTHENTICATION));
 	}
 	
@@ -66,7 +65,7 @@ public class UserProfileControllerTest
 		when(loggedUserInformationComponent.tryGedLoggedUserName()).thenReturn("Test");
 		when(mockUserService.getUserByLogin("Test")).thenReturn(Mockito.mock(User.class));
 
-		mockMvc.perform(get(CONTROLLER_URL))
+		mockMvc.perform(get(UserProfileController.BASE_MAPPING))
 				.andExpect(view().name(SystemViewsName.USER_PROFILE));
 	}
 
@@ -77,7 +76,7 @@ public class UserProfileControllerTest
 		when(loggedUserInformationComponent.tryGedLoggedUserName()).thenReturn("Test");
 		when(mockUserService.getUserByLogin("Test")).thenReturn(Mockito.mock(User.class));
 
-		mockMvc.perform(get(CONTROLLER_URL))
+		mockMvc.perform(get(UserProfileController.BASE_MAPPING))
 			.andExpect(model().attributeExists("userProfile"));
 	}
 
@@ -88,7 +87,7 @@ public class UserProfileControllerTest
 		when(loggedUserInformationComponent.tryGedLoggedUserName()).thenReturn("Test");
 		doThrow(new UserNotFoundException("Test")).when(mockUserService).getUserByLogin("Test");
 
-		mockMvc.perform(get(CONTROLLER_URL))
+		mockMvc.perform(get(UserProfileController.BASE_MAPPING))
 				.andExpect(view().name(SystemViewsName.REDIRECT_TO_MAIN_PAGE));
 	}
 
@@ -107,8 +106,8 @@ public class UserProfileControllerTest
 		when(mockUserService.getUserByLogin("loggedUserName")).thenReturn(loggedUser);
 		when(mockUserService.updateUser(loggedUser.getEmailAddress(), loggedUser)).thenReturn(updatedUser);
 
-		mockMvc.perform(post(CONTROLLER_URL).flashAttr("userProfile", updatedUser))
-				.andExpect(view().name("redirect:" + CONTROLLER_URL));
+		mockMvc.perform(post(UserProfileController.BASE_MAPPING).flashAttr("userProfile", updatedUser))
+				.andExpect(view().name("redirect:" + UserProfileController.BASE_MAPPING));
 
 		verify(mockUserService, times(1)).updateUser(loggedUser.getEmailAddress(), updatedUser);
 	}
@@ -125,8 +124,8 @@ public class UserProfileControllerTest
 		when(mockUserService.getUserByLogin("Test")).thenReturn(loggedUser);
 		when(mockUserService.isUserWithEmaillAddress(userProfile.getEmailAddress())).thenReturn(true);
 
-		mockMvc.perform(post(CONTROLLER_URL).flashAttr("userProfile", userProfile))
+		mockMvc.perform(post(UserProfileController.BASE_MAPPING).flashAttr("userProfile", userProfile))
 				.andExpect(flash().attributeExists("error"))
-				.andExpect(view().name("redirect:" + CONTROLLER_URL));
+				.andExpect(view().name("redirect:" + UserProfileController.BASE_MAPPING));
 	}
 }

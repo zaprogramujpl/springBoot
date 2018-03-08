@@ -18,11 +18,13 @@ import pl.zaprogramuj.spring.boot.webapp.excepotion.user.UserNotFoundException;
 import pl.zaprogramuj.spring.boot.webapp.util.SystemViewsName;
 
 @Controller
-@RequestMapping(value = "/profile")
+@RequestMapping(value = UserProfileController.BASE_MAPPING)
 public class UserProfileController extends AbstractController
 {
 	private static final Logger LOGGER = LoggerFactory.getLogger(UserProfileController.class);
 
+	public static final String BASE_MAPPING = "/profile";
+	
 	@GetMapping
 	public ModelAndView userProfilePage()
 	{

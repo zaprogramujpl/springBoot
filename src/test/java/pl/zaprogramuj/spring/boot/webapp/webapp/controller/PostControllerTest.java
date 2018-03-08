@@ -22,7 +22,6 @@ import pl.zaprogramuj.spring.boot.webapp.configuration.WebSecurityConfig;
 import pl.zaprogramuj.spring.boot.webapp.controller.PostController;
 import pl.zaprogramuj.spring.boot.webapp.domain.post.Post;
 import pl.zaprogramuj.spring.boot.webapp.domain.user.UserRoleEnum;
-import pl.zaprogramuj.spring.boot.webapp.excepotion.post.PostNotFoundException;
 import pl.zaprogramuj.spring.boot.webapp.service.PostService;
 import pl.zaprogramuj.spring.boot.webapp.util.SystemViewsName;
 import pl.zaprogramuj.spring.boot.webapp.webapp.configuration.ApplicationContextConfigurationControllerTest;
@@ -32,7 +31,6 @@ import pl.zaprogramuj.spring.boot.webapp.webapp.configuration.ApplicationContext
 @Import(value = { WebSecurityConfig.class, ApplicationContextConfigurationControllerTest.class })
 public class PostControllerTest
 {
-
 	@Autowired
 	private MockMvc mockMvc;
 

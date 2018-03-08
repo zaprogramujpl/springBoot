@@ -20,10 +20,12 @@ import pl.zaprogramuj.spring.boot.webapp.excepotion.user.UserNotFoundException;
 import pl.zaprogramuj.spring.boot.webapp.util.SystemViewsName;
 
 @Controller
-@RequestMapping(value = "/forgot-password")
+@RequestMapping(value = PasswordForgotController.BASE_MAPPING)
 public class PasswordForgotController extends AbstractController
 {
 	private static final Logger LOGGER = LoggerFactory.getLogger(PasswordForgotController.class);
+	
+	public static final String BASE_MAPPING = "/forgot-password";
 	
 	@InitBinder("forgotPasswordForm")
 	private void initBinding(WebDataBinder binder)

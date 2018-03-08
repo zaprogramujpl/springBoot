@@ -32,17 +32,17 @@ public class AdminHomeControllerTest
 	@WithMockUser(roles = "NOT_ADMIN")
 	public void shouldReturnForibiddenStatusIfUserIsNotAdmin() throws Exception
 	{
-		mockMvc.perform(get(AdminHomeController.BASIC_ADMIN_MAPPING)).andExpect(status().isForbidden());
+		mockMvc.perform(get(AdminHomeController.BASIC_MAPPING)).andExpect(status().isForbidden());
 	}
 	
 	@Test
 	@WithMockUser(roles = "ADMIN")
 	public void shouldReturnAdminBasicPageView() throws Exception
 	{
-		mockMvc.perform(get(AdminHomeController.BASIC_ADMIN_MAPPING)).andExpect(status().isOk())
-				.andExpect(model().attribute("adminPostsUrl", AdminPostController.BASIC_ADMIN_POST_MAPPING))
+		mockMvc.perform(get(AdminHomeController.BASIC_MAPPING)).andExpect(status().isOk())
+				.andExpect(model().attribute("adminPostsUrl", AdminPostController.BASIC_MAPPING))
 				.andExpect(model().attribute("adminAddNewPost",
-								  AdminPostController.BASIC_ADMIN_POST_MAPPING
+								  AdminPostController.BASIC_MAPPING
 								+ AdminPostController.ADMIN_MENU_POST_MANAGEMENT_ADD_POST))
 				.andExpect(view().name(SystemViewsName.ADMIN_INDEX_PAGE));
 	}

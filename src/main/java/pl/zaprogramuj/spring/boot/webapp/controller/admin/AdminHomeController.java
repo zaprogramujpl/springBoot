@@ -10,10 +10,10 @@ import pl.zaprogramuj.spring.boot.webapp.domain.page.PageCharacteristics;
 import pl.zaprogramuj.spring.boot.webapp.util.SystemViewsName;
 
 @Controller
-@RequestMapping(value = AdminHomeController.BASIC_ADMIN_MAPPING)
+@RequestMapping(value = AdminHomeController.BASIC_MAPPING)
 public class AdminHomeController extends AbstractAdminController
 {
-	public static final String BASIC_ADMIN_MAPPING = "/admin";
+	public static final String BASIC_MAPPING = "/admin";
 	public static final String UPDATE_PAGE_CHARACTERISTICS_MAPPING = "/updateCSS";
 	@RequestMapping
 	public ModelAndView mainAdminPage()

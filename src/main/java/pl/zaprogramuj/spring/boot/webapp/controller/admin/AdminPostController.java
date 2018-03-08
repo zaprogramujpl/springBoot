@@ -18,12 +18,12 @@ import pl.zaprogramuj.spring.boot.webapp.excepotion.post.PostException;
 import pl.zaprogramuj.spring.boot.webapp.util.SystemViewsName;
 
 @Controller
-@RequestMapping(value = AdminPostController.BASIC_ADMIN_POST_MAPPING)
+@RequestMapping(value = AdminPostController.BASIC_MAPPING)
 public class AdminPostController extends AbstractAdminController
 {
 	private static final Logger LOGGER = LoggerFactory.getLogger(AdminPostController.class);
 	
-	public static final String BASIC_ADMIN_POST_MAPPING = AdminHomeController.BASIC_ADMIN_MAPPING + "/posts";
+	public static final String BASIC_MAPPING = AdminHomeController.BASIC_MAPPING + "/posts";
 	public static final String ADMIN_MENU_POST_MANAGEMENT_ADD_POST = "/add";
 	
 	@GetMapping
@@ -52,12 +52,11 @@ public class AdminPostController extends AbstractAdminController
 			getPostService().addPost(post);
 		} catch (PostException e)
 		{
-			e.printStackTrace();
 			LOGGER.error("Post Exception: " + e.getMessage());
 			return mnv;
 		}
 		
-		return new ModelAndView("redirect:" + BASIC_ADMIN_POST_MAPPING);
+		return new ModelAndView("redirect:" + BASIC_MAPPING);
 	}
 	
 	private void addLoggedUserToPost(Post post)

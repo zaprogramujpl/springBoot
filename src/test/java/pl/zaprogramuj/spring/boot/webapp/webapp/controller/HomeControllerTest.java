@@ -26,7 +26,6 @@ import pl.zaprogramuj.spring.boot.webapp.webapp.configuration.ApplicationContext
 @Import(value = { WebSecurityConfig.class, ApplicationContextConfigurationControllerTest.class })
 public class HomeControllerTest
 {
-
 	@Autowired
 	private MockMvc mockMvc;
 	
