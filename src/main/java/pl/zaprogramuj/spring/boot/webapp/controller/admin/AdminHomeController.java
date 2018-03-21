@@ -12,20 +12,19 @@ import pl.zaprogramuj.spring.boot.webapp.util.SystemViewsName;
 
 @Controller
 @RequestMapping(value = AdminHomeController.BASIC_MAPPING)
-public class AdminHomeController extends AbstractAdminController
-{
+public class AdminHomeController extends AbstractAdminController {
+	
 	public static final String BASIC_MAPPING = "/admin";
 	public static final String UPDATE_PAGE_CHARACTERISTICS_MAPPING = "/updateCSS";
-	
+
 	@RequestMapping
-	public ModelAndView mainAdminPage()
-	{
+	public ModelAndView mainAdminPage() {
 		return new ModelAndView(SystemViewsName.ADMIN_INDEX_PAGE);
 	}
-	
+
 	@PostMapping(value = UPDATE_PAGE_CHARACTERISTICS_MAPPING)
-	public ModelAndView updatePageCss(@ModelAttribute("pageCharacteristics") PageCharacteristics pageCharacteristics, RedirectAttributes ra)
-	{
+	public ModelAndView updatePageCss(@ModelAttribute("pageCharacteristics") PageCharacteristics pageCharacteristics,
+			RedirectAttributes ra) {
 		getPageCharacteristics().saveOrUpdatePageCharacteristics(pageCharacteristics);
 
 		return new ModelAndView("redirect:" + pageCharacteristics.getUriAddress());

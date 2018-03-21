@@ -15,42 +15,38 @@ import pl.zaprogramuj.spring.boot.webapp.util.SystemViewsName;
 
 @Controller
 @RequestMapping(value = PostController.MAIN_MAPPING)
-public class PostController extends AbstractController
-{
+public class PostController extends AbstractController {
 
 	public static final String MAIN_MAPPING = "/post";
 	public static final String PUBLISHED_POST = "/published";
-	public static final String BASIC_POST_URL = MAIN_MAPPING
-			+ PUBLISHED_POST;
+	public static final String BASIC_POST_URL = MAIN_MAPPING + PUBLISHED_POST;
 
 	@ModelAttribute("basicPostUrl")
-	public String basicPostUrl()
-	{
+	public String basicPostUrl() {
 		return BASIC_POST_URL;
 	}
 
 	@GetMapping
-	public ModelAndView postsPage(@RequestParam(value = "edit", required = false) String postEditView)
-	{
+	public ModelAndView postsPage(@RequestParam(value = "edit", required = false) String postEditView) {
 		ModelAndView mnv = null;
-		mnv = getLoggedUserInformationComponent().userHasRole("ROLE_" + UserRoleEnum.ADMIN.toString())	&& Boolean.TRUE.toString().equals(postEditView) 
-				? new ModelAndView(SystemViewsName.EDIT_POST_LIST_PAGE)
-				: new ModelAndView(SystemViewsName.POST_LIST_PAGE);
+		mnv = getLoggedUserInformationComponent().userHasRole("ROLE_" + UserRoleEnum.ADMIN.toString())
+				&& Boolean.TRUE.toString().equals(postEditView) ? new ModelAndView(SystemViewsName.EDIT_POST_LIST_PAGE)
+						: new ModelAndView(SystemViewsName.POST_LIST_PAGE);
 
 		mnv.addObject("posts", getPostService().getAllPosts());
 		mnv.addObject("postsPage", true);
 		return mnv;
 	}
-	
+
 	@GetMapping(value = PUBLISHED_POST + "/{postUrlAddress}")
 	public ModelAndView publishedPost(@PathVariable(value = "postUrlAddress") String postUrlAddress,
-			@RequestParam(value = "edit", required = false) String postEditView) throws PostNotFoundException
-	{
+			@RequestParam(value = "edit", required = false) String postEditView) throws PostNotFoundException {
+		
 		ModelAndView mnv = null;
 
-		mnv = getLoggedUserInformationComponent().userHasRole("ROLE_" + UserRoleEnum.ADMIN.toString())	&& Boolean.TRUE.toString().equals(postEditView) 
-				? new ModelAndView(SystemViewsName.EDIT_POST_PAGE)
-				: new ModelAndView(SystemViewsName.POST_PAGE);
+		mnv = getLoggedUserInformationComponent().userHasRole("ROLE_" + UserRoleEnum.ADMIN.toString())
+				&& Boolean.TRUE.toString().equals(postEditView) ? new ModelAndView(SystemViewsName.EDIT_POST_PAGE)
+						: new ModelAndView(SystemViewsName.POST_PAGE);
 
 		Post post = getPostService().getPostByUrlAddress(postUrlAddress);
 		mnv.addObject("post", post);

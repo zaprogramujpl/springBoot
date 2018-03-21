@@ -16,25 +16,22 @@ import pl.zaprogramuj.spring.boot.webapp.domain.password.PasswordResetToken;
 
 @Repository
 @Scope(scopeName = BeanDefinition.SCOPE_SINGLETON)
-public class PasswordResetTokenDaoImpl extends AbstractDao<Long, PasswordResetToken> implements PasswordResetTokenDao
-{
+public class PasswordResetTokenDaoImpl extends AbstractDao<Long, PasswordResetToken> implements PasswordResetTokenDao {
 	@Override
-	public PasswordResetToken findByToken(String token) 
-	{
+	public PasswordResetToken findByToken(String token) {
 		Session session = getEntityMenager().unwrap(Session.class);
 		CriteriaBuilder builder = session.getCriteriaBuilder();
 		CriteriaQuery<PasswordResetToken> criteriaQuery = builder.createQuery(PasswordResetToken.class);
 		Root<PasswordResetToken> root = criteriaQuery.from(PasswordResetToken.class);
-		
-		criteriaQuery.select(root).where(builder.equal(root.get("token"), token));		
+
+		criteriaQuery.select(root).where(builder.equal(root.get("token"), token));
 		Query<PasswordResetToken> query = session.createQuery(criteriaQuery);
-		
+
 		return query.getResultList().isEmpty() ? null : query.getSingleResult();
 	}
 
 	@Override
-	public void deleteToken(PasswordResetToken token)
-	{
+	public void deleteToken(PasswordResetToken token) {
 		remove(token);
-	}	
+	}
 }

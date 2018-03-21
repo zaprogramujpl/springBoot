@@ -25,59 +25,47 @@ import pl.zaprogramuj.spring.boot.webapp.domain.user.UserRoleEnum;
 
 @Repository
 @Scope(scopeName = BeanDefinition.SCOPE_SINGLETON)
-public class UserRoleDaoImpl extends AbstractDao<Long, UserRole> implements UserRoleDao
-{
-	
+public class UserRoleDaoImpl extends AbstractDao<Long, UserRole> implements UserRoleDao {
 	@Autowired
 	@Qualifier("transactionManager")
 	protected PlatformTransactionManager txManager;
 
 	@PostConstruct
-	private void init()
-	{
+	private void init() {
 		TransactionTemplate tmpl = new TransactionTemplate(txManager);
-		tmpl.execute(new TransactionCallbackWithoutResult()
-		{
+		tmpl.execute(new TransactionCallbackWithoutResult() {
 			@Override
-			protected void doInTransactionWithoutResult(TransactionStatus status)
-			{
+			protected void doInTransactionWithoutResult(TransactionStatus status) {
 				initUserProfileRoles();
 			}
 		});
 	}
 
 	@Override
-	public UserRole findByName(String roleName)
-	{
+	public UserRole findByName(String roleName) {
 		Session session = getEntityMenager().unwrap(Session.class);
-		CriteriaBuilder builder = session.getCriteriaBuilder();	
-		
-		CriteriaQuery<UserRole> criteriaQuery = builder.createQuery(UserRole.class);	
+		CriteriaBuilder builder = session.getCriteriaBuilder();
+
+		CriteriaQuery<UserRole> criteriaQuery = builder.createQuery(UserRole.class);
 		Root<UserRole> rootUser = criteriaQuery.from(UserRole.class);
-		criteriaQuery.select(rootUser).where(builder.equal(rootUser.get("role"), roleName));		
+		criteriaQuery.select(rootUser).where(builder.equal(rootUser.get("role"), roleName));
 		Query<UserRole> query = session.createQuery(criteriaQuery);
-		
+
 		return query.getResultList().isEmpty() ? null : query.getSingleResult();
 	}
 
-	/*
-	 * This is method to initializing default user profile roles.
-	 */	
 	@Transactional
 	@Override
-	public void initUserProfileRoles()
-	{
+	public void initUserProfileRoles() {
 		UserRoleEnum[] rolesTable = UserRoleEnum.class.getEnumConstants();
-		for (UserRoleEnum roleName : rolesTable)
-		{
+		for (UserRoleEnum roleName : rolesTable) {
 			UserRole r = findByName(roleName.getUserRole());
-			if (r == null)
-			{
+			if (r == null) {
 				UserRole role = new UserRole();
 				role.setRole(roleName.getUserRole());
 				persist(role);
 			}
-		}		
+		}
 	}
 
 }

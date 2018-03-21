@@ -16,17 +16,17 @@ import pl.zaprogramuj.spring.boot.webapp.domain.user.User;
 @Scope(scopeName = BeanDefinition.SCOPE_SINGLETON)
 @Transactional
 public class UserDetailsServiceImpl implements UserDetailsService {
-	
+
 	@Autowired
 	private UserDao userRepository;
 
 	@Override
 	public UserDetails loadUserByUsername(String login) throws UsernameNotFoundException {
 		User userProfile = userRepository.findByLogin(login);
-		if(null == userProfile)
-		{
+		if (null == userProfile) {
 			throw new UsernameNotFoundException("Username not found");
 		}
-		return new org.springframework.security.core.userdetails.User(userProfile.getLogin(), userProfile.getPassword(), userProfile.getAuthorities());
+		return new org.springframework.security.core.userdetails.User(userProfile.getLogin(), userProfile.getPassword(),
+				userProfile.getAuthorities());
 	}
 }

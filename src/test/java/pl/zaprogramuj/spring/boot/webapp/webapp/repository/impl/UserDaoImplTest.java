@@ -2,6 +2,8 @@ package pl.zaprogramuj.spring.boot.webapp.webapp.repository.impl;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNull;
+import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.fail;
 
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -44,6 +46,29 @@ public class UserDaoImplTest {
 
         User daoUser = userDao.findByName(user.getUsername());
         assertEquals(user.getUsername(), daoUser.getUsername());
+    }
+    
+    @Test
+    public void shouldReturnTrueIfExistUserWithEmailAddress()
+    {
+        User user = new User();
+        user.setEmailAddress("testEmail");
+        
+        entityManager.persist(user);
+        
+        assertTrue(userDao.isUserWithEmailAddress("testEmail"));
+    }
+    
+    @Test
+    public void shouldReturnTrueIfExistsUserWithLogin()
+    {
+    	User user = new User();
+    	user.setEmailAddress("NOT_NULL");
+    	user.setLogin("testLogin");
+    	
+    	entityManager.persist(user);
+    	
+    	assertTrue(userDao.isUserWithLogin("testLogin"));
     }
 }
 

@@ -1,6 +1,12 @@
 package pl.zaprogramuj.spring.boot.webapp.util;
 
+import pl.zaprogramuj.spring.boot.webapp.controller.PasswordForgotController;
+import pl.zaprogramuj.spring.boot.webapp.controller.UserProfileController;
+
 public final class SystemViewsName {
+	
+	private static final String redirect = "redirect:";
+	
 	public static final String INDEX = "page/index";
 	public static final String EDIT_INDEX = "page/editIndex";
 	
@@ -15,17 +21,19 @@ public final class SystemViewsName {
 	public static final String EDIT_POST_PAGE = "page/postPage/editPostPage";
 
 	public static final String ERROR_403 = "page/error/403";
-	public static final String REDIRECT_TO_MAIN_PAGE = "redirect:/";
 	public static final String PASSWORD_FORGOT = "page/forgotPasswordPage/forgotPasswordPage";
 	public static final String PASSWORD_RESET = "page/resetPasswordPage/resetPasswordPage";
 	
-	public static final String REDIRECT_TO_FORGOT_PASSWORD_PAGE = "redirect:/forgot-password";
+	public static final String REDIRECT_TO_MAIN_PAGE = redirect + "/";
+	public static final String REDIRECT_TO_USER_PROFILE_BASE_MAPPING = redirect + UserProfileController.BASE_MAPPING;
+	public static final String REDIRECT_TO_FORGOT_PASSWORD_PAGE = redirect + PasswordForgotController.BASE_MAPPING;
+	
 	public static final String REDIRECT_AUTHENTICATION = "http://localhost/login";
 	
 	public static final String ADMIN_INDEX_PAGE = "page/admin/index";
 	public static final String ADMIN_POSTS_PAGE = "page/admin/post/postsPage";
 	public static final String ADMIN_ADD_POST_PAGE = "page/admin/post/addPostPage";
-		
+	
 	private SystemViewsName() {
 
 	}

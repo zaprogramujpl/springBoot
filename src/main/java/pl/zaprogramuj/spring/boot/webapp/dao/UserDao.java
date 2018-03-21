@@ -9,4 +9,6 @@ public interface UserDao {
 	public abstract void addUser(User user);
 	public abstract User findByEmailAddress(String emailAddress);
 	public abstract User updateUser(User user);
+	public abstract boolean isUserWithEmailAddress(String emailAddress);
+	public abstract boolean isUserWithLogin(String login);
 }

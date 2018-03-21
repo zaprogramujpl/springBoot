@@ -20,119 +20,103 @@ import pl.zaprogramuj.spring.boot.webapp.service.SystemPropertiesService;
 import pl.zaprogramuj.spring.boot.webapp.service.UserRoleService;
 import pl.zaprogramuj.spring.boot.webapp.service.UserService;
 
-public abstract class AbstractController 
-{	
-    @Autowired
-    private MessageSource messageSource;
-	
+public abstract class AbstractController {
+	@Autowired
+	private MessageSource messageSource;
+
 	@Autowired
 	private SystemPropertiesService systemProperties;
-	
+
 	@Autowired
 	private UserService userService;
-	
+
 	@Autowired
 	private UserRoleService userRoleService;
-	
+
 	@Autowired
 	private PasswordResetTokenService passwordResetTokenService;
-	
+
 	@Autowired
 	private EmailService emailService;
-	
+
 	@Autowired
 	private PostService postService;
-	
+
 	@Autowired
 	private PageCharacteristicsService pageCharacteristics;
 
 	@Autowired
 	private LoggedUserInformationComponent loggedUserInformationComponent;
-	
+
 	@Autowired
 	@Qualifier("userFormValidator")
 	private Validator userFormValidator;
-	
+
 	@Autowired
 	@Qualifier("forgotPasswordFormValidator")
 	private Validator forgotPasswordFormValidator;
-	
+
 	@ModelAttribute("systemVersion")
-	public String getSystemVersion()
-	{
+	public String getSystemVersion() {
 		return systemProperties.getSystemVersion();
 	}
-	
+
 	@ModelAttribute("updatePageCss")
-	public String getUpdatePageCssURL()
-	{
+	public String getUpdatePageCssURL() {
 		return AdminHomeController.BASIC_MAPPING + AdminHomeController.UPDATE_PAGE_CHARACTERISTICS_MAPPING;
 	}
-	
+
 	@ModelAttribute("pageCharacteristics")
-	public PageCharacteristics getPageCSS(HttpServletRequest request) throws PageCharacteristicsNotExistsException
-	{
+	public PageCharacteristics getPageCSS(HttpServletRequest request) throws PageCharacteristicsNotExistsException {
 		PageCharacteristics pageCharacteristics = null;
-			
-		if(getPageCharacteristics().isPageCharacteristicsWithUriAddress(request.getRequestURI()))
-		{
+
+		if (getPageCharacteristics().isPageCharacteristicsWithUriAddress(request.getRequestURI())) {
 			pageCharacteristics = getPageCharacteristics().getPageCharacteristicsByUriAddress(request.getRequestURI());
-		}else
-		{
+		} else {
 			pageCharacteristics = new PageCharacteristics();
 			pageCharacteristics.setUriAddress(request.getRequestURI());
 		}
-		
+
 		return pageCharacteristics;
 	}
 
-	public UserService getUserService()
-	{
+	public UserService getUserService() {
 		return userService;
 	}
 
-	public UserRoleService getUserRoleService()
-	{
+	public UserRoleService getUserRoleService() {
 		return userRoleService;
 	}
 
-	public PostService getPostService()
-	{
+	public PostService getPostService() {
 		return postService;
 	}
-	
-	public PageCharacteristicsService getPageCharacteristics()
-	{
+
+	public PageCharacteristicsService getPageCharacteristics() {
 		return pageCharacteristics;
 	}
 
-	public Validator getUserFormValidator()
-	{
+	public Validator getUserFormValidator() {
 		return userFormValidator;
 	}
 
-	public Validator getForgotPasswordFormValidator()
-	{
+	public Validator getForgotPasswordFormValidator() {
 		return forgotPasswordFormValidator;
 	}
 
-	public PasswordResetTokenService getPasswordResetTokenService()
-	{
+	public PasswordResetTokenService getPasswordResetTokenService() {
 		return passwordResetTokenService;
 	}
 
-	public EmailService getEmailService()
-	{
+	public EmailService getEmailService() {
 		return emailService;
 	}
 
-	public MessageSource getMessageSource()
-	{
+	public MessageSource getMessageSource() {
 		return messageSource;
 	}
 
-	public LoggedUserInformationComponent getLoggedUserInformationComponent()
-	{
+	public LoggedUserInformationComponent getLoggedUserInformationComponent() {
 		return loggedUserInformationComponent;
 	}
 }

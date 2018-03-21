@@ -11,14 +11,12 @@ import pl.zaprogramuj.spring.boot.webapp.service.UserRoleService;
 
 @Service(value = "userRoleService")
 @Scope(scopeName = BeanDefinition.SCOPE_SINGLETON)
-public class UserRoleServiceImpl implements UserRoleService
-{
+public class UserRoleServiceImpl implements UserRoleService {
 	@Autowired
-	private UserRoleDao userRoleDao;	
-	
+	private UserRoleDao userRoleDao;
+
 	@Override
-	public UserRole findByName(String roleName)
-	{
+	public UserRole findByName(String roleName) {
 		return userRoleDao.findByName(roleName);
 	}
 

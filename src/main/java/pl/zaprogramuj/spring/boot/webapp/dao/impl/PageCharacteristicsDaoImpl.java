@@ -16,32 +16,29 @@ import pl.zaprogramuj.spring.boot.webapp.domain.page.PageCharacteristics;
 
 @Repository
 @Scope(scopeName = BeanDefinition.SCOPE_SINGLETON)
-public class PageCharacteristicsDaoImpl extends AbstractDao<Long, PageCharacteristics> implements PageCharacteristicsDao
-{
+public class PageCharacteristicsDaoImpl extends AbstractDao<Long, PageCharacteristics>
+		implements PageCharacteristicsDao {
 
 	@Override
-	public void addPageCharacteristics(PageCharacteristics page)
-	{
-		persist(page);		
+	public void addPageCharacteristics(PageCharacteristics page) {
+		persist(page);
 	}
 
 	@Override
-	public PageCharacteristics updatePageCharacteristics(PageCharacteristics page)
-	{
+	public PageCharacteristics updatePageCharacteristics(PageCharacteristics page) {
 		return merge(page);
 	}
 
 	@Override
-	public PageCharacteristics findPageCharacteristicsByUriAddress(String urlAddress)
-	{
+	public PageCharacteristics findPageCharacteristicsByUriAddress(String urlAddress) {
 		Session session = getEntityMenager().unwrap(Session.class);
 		CriteriaBuilder builder = session.getCriteriaBuilder();
 		CriteriaQuery<PageCharacteristics> criteriaQuery = builder.createQuery(PageCharacteristics.class);
 		Root<PageCharacteristics> root = criteriaQuery.from(PageCharacteristics.class);
-		
-		criteriaQuery.select(root).where(builder.equal(root.get("uriAddress"), urlAddress));		
+
+		criteriaQuery.select(root).where(builder.equal(root.get("uriAddress"), urlAddress));
 		Query<PageCharacteristics> query = session.createQuery(criteriaQuery);
-		
+
 		return query.getResultList().isEmpty() ? null : query.getSingleResult();
 	}
 }

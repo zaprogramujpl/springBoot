@@ -16,32 +16,28 @@ import pl.zaprogramuj.spring.boot.webapp.domain.user.User;
 
 @Repository
 @Scope(scopeName = BeanDefinition.SCOPE_SINGLETON)
-public class UserDaoImpl extends AbstractDao<Long, User> implements UserDao
-{
+public class UserDaoImpl extends AbstractDao<Long, User> implements UserDao {
 
 	@Override
-	public User findByLogin(String login) 
-	{
+	public User findByLogin(String login) {
 		Session session = getEntityMenager().unwrap(Session.class);
-		CriteriaBuilder builder = session.getCriteriaBuilder();	
-		
-		CriteriaQuery<User> criteriaQuery = builder.createQuery(User.class);	
+		CriteriaBuilder builder = session.getCriteriaBuilder();
+
+		CriteriaQuery<User> criteriaQuery = builder.createQuery(User.class);
 		Root<User> rootUser = criteriaQuery.from(User.class);
-		criteriaQuery.select(rootUser).where(builder.equal(rootUser.get("login"), login));		
+		criteriaQuery.select(rootUser).where(builder.equal(rootUser.get("login"), login));
 		Query<User> query = session.createQuery(criteriaQuery);
-		
+
 		return query.getResultList().isEmpty() ? null : query.getSingleResult();
 	}
 
 	@Override
-	public void addUser(User user) 
-	{
-		persist(user);		
+	public void addUser(User user) {
+		persist(user);
 	}
 
 	@Override
-	public User findById(long id) 
-	{
+	public User findById(long id) {
 		return getByPrimaryKey(id);
 	}
 
@@ -59,22 +55,30 @@ public class UserDaoImpl extends AbstractDao<Long, User> implements UserDao
 	}
 
 	@Override
-	public User findByEmailAddress(String emailAddress)
-	{
+	public User findByEmailAddress(String emailAddress) {
 		Session session = getEntityMenager().unwrap(Session.class);
-		CriteriaBuilder builder = session.getCriteriaBuilder();	
-		
-		CriteriaQuery<User> criteriaQuery = builder.createQuery(User.class);	
+		CriteriaBuilder builder = session.getCriteriaBuilder();
+
+		CriteriaQuery<User> criteriaQuery = builder.createQuery(User.class);
 		Root<User> rootUser = criteriaQuery.from(User.class);
-		criteriaQuery.select(rootUser).where(builder.equal(rootUser.get("emailAddress"), emailAddress));		
+		criteriaQuery.select(rootUser).where(builder.equal(rootUser.get("emailAddress"), emailAddress));
 		Query<User> query = session.createQuery(criteriaQuery);
-		
+
 		return query.getResultList().isEmpty() ? null : query.getSingleResult();
 	}
-	
+
 	@Override
-	public User updateUser(User user)
-	{
+	public User updateUser(User user) {
 		return merge(user);
+	}
+
+	@Override
+	public boolean isUserWithEmailAddress(String emailAddress) {
+		return findByEmailAddress(emailAddress) != null ? true : false;
+	}
+
+	@Override
+	public boolean isUserWithLogin(String login) {
+		return findByLogin(login) != null ? true : false;
 	}
 }

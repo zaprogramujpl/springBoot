@@ -50,12 +50,22 @@ public class UserServiceImplTest {
 
 	// Tests for method : registerUser [BEGIN]
 	@Test(expected = UserExistsException.class)
-	public void shouldThrowExceptionWhenTriedAddExistingUser() throws UserExistsException {
+	public void shouldThrowExceptionWhenTriedAddUserWithExistingLogin() throws UserExistsException {
 		User user = new User();
 		user.setLogin("test");
-
-		when(mockUserRepository.findByLogin(user.getLogin())).thenReturn(user);
-
+		
+		when(mockUserRepository.isUserWithLogin("test")).thenReturn(true);
+		
+		userService.registerUser(user);
+	}
+	
+	@Test(expected = UserExistsException.class)
+	public void shouldThrowExceptionWhenTriedAddUserWithExistingEmailAddress() throws UserExistsException {
+		User user = new User();
+		user.setEmailAddress("test");
+		
+		when(mockUserRepository.isUserWithEmailAddress("test")).thenReturn(true);
+		
 		userService.registerUser(user);
 	}
 	// Tests for method : registerUser [END]
