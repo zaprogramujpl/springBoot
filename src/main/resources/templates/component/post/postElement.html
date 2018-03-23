@@ -7,7 +7,7 @@
 </head>
 <body>
 	<div th:fragment="postElement">
-		<p th:utext="${post.content}"></p>
+		<p th:utext="${post.content}" th:remove="tag"></p>
 	</div>
 </body>
 </html>

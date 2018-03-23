@@ -21,61 +21,53 @@ import pl.zaprogramuj.spring.boot.webapp.util.Constants;
 @Component
 @Scope(value = BeanDefinition.SCOPE_SINGLETON)
 public class LoggedUserInformationComponentImpl implements LoggedUserInformationComponent {
-	
+
 	private static final Logger LOGGER = LoggerFactory.getLogger(LoggedUserInformationComponentImpl.class);
-	
+
 	@Autowired
 	private UserService userService;
-	
-    @Override
-    public String tryGedLoggedUserName() {
-        org.springframework.security.core.userdetails.User userProfile = (org.springframework.security.core.userdetails.User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-        return userProfile.getUsername();
-    }
-    
-    @Override
-    public boolean isLoggedUser()
-    {
-    	Authentication auth = SecurityContextHolder.getContext().getAuthentication();    	
-    	return auth.getName().equals(Constants.DEFALT_SPRING_ANONYMOUS_USER_NAME) ? false : true;
-    }
-    
-    @Override
-    public boolean userHasRole(String role)
-    {
-    	Set<String> roles = new HashSet<>();
-    	Authentication auth = SecurityContextHolder.getContext().getAuthentication();    	
-    	auth.getAuthorities().stream().map(Object::toString).forEach(roles::add);    	
-    	return roles.contains(role);
-    }
-    
-    @Override
-	public User tryGetUserByEmailAddress(String emailAddress)
-	{
-		User user = null;	
-		try
-		{
+
+	@Override
+	public String tryGedLoggedUserName() {
+		org.springframework.security.core.userdetails.User userProfile = (org.springframework.security.core.userdetails.User) SecurityContextHolder
+				.getContext().getAuthentication().getPrincipal();
+		return userProfile.getUsername();
+	}
+
+	@Override
+	public boolean isLoggedUser() {
+		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+		return auth.getName().equals(Constants.DEFALT_SPRING_ANONYMOUS_USER_NAME) ? false : true;
+	}
+
+	@Override
+	public boolean userHasRole(String role) {
+		Set<String> roles = new HashSet<>();
+		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+		auth.getAuthorities().stream().map(Object::toString).forEach(roles::add);
+		return roles.contains(role);
+	}
+
+	@Override
+	public User tryGetUserByEmailAddress(String emailAddress) {
+		User user = null;
+		try {
 			user = userService.getUserByEmail(emailAddress);
-		} catch (UserNotFoundException e)
-		{
+		} catch (UserNotFoundException e) {
 			LOGGER.error(e.getMessage());
-		}		
+		}
 		return user;
 	}
 
 	@Override
-	public User tryGetLoggedUser()
-	{
-		User user = null;	
-		try
-		{
+	public User tryGetLoggedUser() {
+		User user = null;
+		try {
 			user = userService.getUserByName(tryGedLoggedUserName());
-		} catch (UserNotFoundException e)
-		{
+		} catch (UserNotFoundException e) {
 			LOGGER.error(e.getMessage());
-		}		
+		}
 		return user;
 	}
-    
-    
+
 }

@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html xmlns="http://www.thymeleaf.org"
+	xmlns:th="http://www.thymeleaf.org"
+	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity4">
+<head>
+<meta charset="utf-8" />
+<title>Comment Component - Webapplication by zaprogramuj.pl</title>
+</head>
+<body>
+	<div th:fragment="postCommentList">
+		<div class="row">
+			<div class="comments-container">
+				<h1>Comment Component</h1>
+				<button type="button" class="btn btn-primary addCommentModal" data-id="1" data-parent-id="0" data-toggle="modal" data-target="#myModal">Add Comment</button>
+				
+				<div th:include="component/post/postCommentElement :: postCommentElement" th:with="commentsTh=${post.comments}" th:remove="tag"></div>
+				
+				<ul id="comments-list" class="comments-list">
+					<li>
+						<div class="comment-main-level">
+							<div class="comment-avatar">
+								<img src="http://i9.photobucket.com/albums/a88/creaticode/avatar_1_zps8e1c80cd.jpg" alt="">
+							</div>
+							<div class="comment-box">
+								<div class="comment-head">
+									<h6 class="comment-name by-author">
+										<a href="http://creaticode.com/blog">Agustin Ortiz</a>
+									</h6>
+									<span>hace 20 minutos</span> 
+									<i class="fa fa-reply"></i> 
+									<i class="fa fa-heart"></i>
+									<button type="button" class="btn btn-primary addCommentModal" style="float:right" data-id="2" data-parent-id="1" data-toggle="modal" data-target="#myModal">Add Comment</button>
+								</div>
+								<div class="comment-content">
+									Lorem ipsum dolor sit amet,	consectetur adipisicing elit. Velit omnis animi et iure
+									laudantium vitae, praesentium optio, sapiente distinctio illo?
+								</div>
+							</div>
+						</div>
+						<ul class="comments-list reply-list">
+							<li>
+								<div class="comment-avatar">
+									<img src="http://i9.photobucket.com/albums/a88/creaticode/avatar_2_zps7de12f8b.jpg"	alt="">
+								</div>
+								<div class="comment-box">
+									<div class="comment-head">
+										<h6 class="comment-name">
+											<a href="http://creaticode.com/blog">Lorena Rojero</a>
+										</h6>
+										<span>hace 10 minutos</span>
+										<i class="fa fa-reply"></i>
+										<i class="fa fa-heart"></i>
+										<button type="button" class="btn btn-primary" style="float:right" data-toggle="modal" data-target="#myModal">Add Comment</button>
+									</div>
+									<div class="comment-content">Lorem ipsum dolor sit amet,
+										consectetur adipisicing elit. Velit omnis animi et iure
+										laudantium vitae, praesentium optio, sapiente distinctio illo?
+									</div>
+								</div>
+							</li>
+							<li>
+								<div class="comment-avatar">
+									<img src="http://i9.photobucket.com/albums/a88/creaticode/avatar_1_zps8e1c80cd.jpg" alt="">
+								</div>
+								<div class="comment-box">
+									<div class="comment-head">
+										<h6 class="comment-name by-author">
+											<a href="http://creaticode.com/blog">Agustin Ortiz</a>
+										</h6>
+										<span>hace 10 minutos</span>
+										<i class="fa fa-reply"></i>
+										<i class="fa fa-heart"></i>
+									<button type="button" class="btn btn-primary" style="float:right" data-toggle="modal" data-target="#myModal">Add Comment</button>
+									</div>
+									<div class="comment-content">
+										Lorem ipsum dolor sit amet,	consectetur adipisicing elit. Velit omnis animi et iure
+										laudantium vitae, praesentium optio, sapiente distinctio illo?
+									</div>
+								</div>
+							</li>
+						</ul>
+					</li>
+					<li>
+						<div class="comment-main-level">
+							<div class="comment-avatar">
+								<img src="http://i9.photobucket.com/albums/a88/creaticode/avatar_2_zps7de12f8b.jpg"	alt="">
+							</div>
+							<div class="comment-box">
+								<div class="comment-head">
+									<h6 class="comment-name">
+										<a href="http://creaticode.com/blog">Lorena Rojero</a>
+									</h6>
+									<span>hace 10 minutos</span> 
+									<i class="fa fa-reply"></i> 
+									<i class="fa fa-heart"></i>
+									<button type="button" class="btn btn-primary" style="float:right" data-toggle="modal" data-target="#myModal">Add Comment</button>
+								</div>
+								<div class="comment-content">
+									Lorem ipsum dolor sit amet,	consectetur adipisicing elit. Velit omnis animi et iure
+									laudantium vitae, praesentium optio, sapiente distinctio illo?
+								</div>
+							</div>
+						</div>
+					</li>
+				</ul>
+			</div>
+		</div>
+		
+		<!-- Modal -->
+		<div class="modal fade" id="myModal" tabindex="-1" role="dialog"
+			aria-labelledby="myModalLabel">
+			<div class="modal-dialog" role="document">
+				<div class="modal-content">
+					<div class="modal-header">
+						<button type="button" class="close" data-dismiss="modal"
+							aria-label="Close">
+							<span aria-hidden="true">&times;</span>
+						</button>
+						<h4 class="modal-title" id="myModalLabel">Modal title</h4>
+					</div>
+					<div class="modal-body">
+						<div th:include="component/post/addCommentFormComponent :: addCommentFormComponent" th:remove="tag"></div>
+					</div>
+				</div>
+			</div>
+		</div>	
+	</div>
+</body>
+</html>

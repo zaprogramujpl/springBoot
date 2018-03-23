@@ -6,6 +6,9 @@
 </head>
 <body>
 	<div th:fragment="loginFormComponent">
+	
+		<div id="errors" th:if="${param.error != null}" th:text="#{loginForm.error}"></div>
+		
 		<form th:action="@{/login}" method="post">
 			<div class="form-group">
 				<label for="userLogin" th:text="#{loginForm.label.login}"></label> <input type="text" class="form-control" id="userLogin" name="userLogin" placeholder="Login" />

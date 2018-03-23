@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html xmlns="http://www.thymeleaf.org"
+	xmlns:th="http://www.thymeleaf.org"
+	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity4">
+<head>
+<meta charset="utf-8" />
+<title>Comment Component Element - Webapplication by zaprogramuj.pl</title>
+</head>
+<body>
+	<div th:fragment="postCommentElement">
+		<ul>
+			<li th:each="comment : ${commentsTh}">				
+				<ul id="comments-list" class="comments-list" th:classappend="${comment.parent != null} ? reply-list">
+					<li>
+						<div th:classappend="${comment.parent != null} ? comment-main-level">
+							<p th:text="${comment.content}"></p>
+						</div>
+					</li>
+				</ul>			
+				<div th:include="component/post/postCommentElement :: postCommentElement" th:with="commentsTh=${comment.subComments}" th:remove="tag"></div>
+			</li>
+		</ul>
+	</div>
+</body>
+</html>

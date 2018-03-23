@@ -19,23 +19,25 @@ import pl.zaprogramuj.spring.boot.webapp.service.UserService;
 @Service
 @Scope(scopeName = BeanDefinition.SCOPE_SINGLETON)
 @Transactional
-public class UserServiceImpl implements UserService{
+public class UserServiceImpl implements UserService {
 
 	@Autowired
 	private UserDao userRepository;
-	
+
 	@Autowired
-    private PasswordEncoder passwordEncoder;
-	
+	private PasswordEncoder passwordEncoder;
+
 	@Override
 	public void registerUser(User newUser) throws UserExistsException {
-		User user = userRepository.findByLogin(newUser.getLogin());
-		
-		if(user != null)
-		{
+		if (userRepository.isUserWithLogin(newUser.getLogin())) {
 			throw new UserExistsException("There is already a user with an " + newUser.getLogin() + " login");
 		}
-		
+
+		if (userRepository.isUserWithEmailAddress(newUser.getEmailAddress())) {
+			throw new UserExistsException(
+					"There is already a user with an " + newUser.getEmailAddress() + " emailAddress");
+		}
+
 		newUser.setPassword(passwordEncoder.encode(newUser.getPassword()));
 		userRepository.addUser(newUser);
 	}
@@ -45,8 +47,7 @@ public class UserServiceImpl implements UserService{
 
 		User user = userRepository.findByLogin(userLogin);
 
-		if(user == null)
-		{
+		if (user == null) {
 			throw new UserNotFoundException(userLogin);
 		}
 
@@ -55,25 +56,22 @@ public class UserServiceImpl implements UserService{
 
 	@Override
 	public User getUserById(long id) throws UserNotFoundException {
-		
+
 		User user = userRepository.findById(id);
-		
-		if(user == null)
-		{
+
+		if (user == null) {
 			throw new UserNotFoundException(id);
-		}		
+		}
 		return user;
 	}
 
 	@Override
-	public User getUserByEmail(String emailAddress) throws UserNotFoundException
-	{	
+	public User getUserByEmail(String emailAddress) throws UserNotFoundException {
 		User user = userRepository.findByEmailAddress(emailAddress);
-		
-		if(user == null)
-		{
+
+		if (user == null) {
 			throw new UserNotFoundException(emailAddress);
-		}		
+		}
 		return user;
 	}
 
@@ -82,26 +80,23 @@ public class UserServiceImpl implements UserService{
 
 		User user = userRepository.findByName(userName);
 
-		if(user == null)
-		{
+		if (user == null) {
 			throw new UserNotFoundException(userName);
 		}
 		return user;
 	}
 
 	@Override
-	public void addUewPasswordResetTokenToUser(User user)
-	{	
+	public void addUewPasswordResetTokenToUser(User user) {
 		PasswordResetToken passwordResetToken = createNewPasswordResetToken();
 		passwordResetToken.setUser(user);
 		user.setPasswordResetToken(passwordResetToken);
-		
+
 		userRepository.updateUser(user);
 	}
-	
+
 	@Override
-	public void updateUserPassword(User updatedUser, String password) throws UserNotFoundException
-	{
+	public void updateUserPassword(User updatedUser, String password) throws UserNotFoundException {
 		User user = getUserByEmail(updatedUser.getEmailAddress());
 		user.setPassword(passwordEncoder.encode(password));
 	}
@@ -110,8 +105,7 @@ public class UserServiceImpl implements UserService{
 	public User updateUser(String updatedUserEmail, User userInformation) throws UserNotFoundException {
 
 		User user = userRepository.findByEmailAddress(updatedUserEmail);
-		if(user == null)
-		{
+		if (user == null) {
 			throw new UserNotFoundException(updatedUserEmail);
 		}
 		user.setUserName(userInformation.getUserName());
@@ -120,8 +114,7 @@ public class UserServiceImpl implements UserService{
 		return user;
 	}
 
-	private PasswordResetToken createNewPasswordResetToken()
-	{
+	private PasswordResetToken createNewPasswordResetToken() {
 		PasswordResetToken passwordResetToken = new PasswordResetToken();
 		passwordResetToken.setToken(UUID.randomUUID().toString());
 		passwordResetToken.setExpiryDate(60);

@@ -19,25 +19,25 @@ import pl.zaprogramuj.spring.boot.webapp.util.SystemViewsName;
 
 @Controller
 @RequestMapping(value = UserProfileController.BASE_MAPPING)
-public class UserProfileController extends AbstractController
-{
+public class UserProfileController extends AbstractController {
 	private static final Logger LOGGER = LoggerFactory.getLogger(UserProfileController.class);
 
 	public static final String BASE_MAPPING = "/profile";
-	
+
 	@GetMapping
-	public ModelAndView userProfilePage()
-	{
+	public ModelAndView userProfilePage() {
 		ModelAndView mnv = new ModelAndView();
 		User loggedUserProfile = null;
 		try {
-			loggedUserProfile = getUserService().getUserByLogin(getLoggedUserInformationComponent().tryGedLoggedUserName());
+			loggedUserProfile = getUserService()
+					.getUserByLogin(getLoggedUserInformationComponent().tryGedLoggedUserName());
 		} catch (UserNotFoundException | NullPointerException e) {
 			LOGGER.error("Not Found Logged User in DB");
 			mnv.setViewName(SystemViewsName.REDIRECT_TO_MAIN_PAGE);
 			return mnv;
 		}
-		//TODO: Think about whether to leave it like this. Should the user's password be displayed?
+		// TODO: Think about whether to leave it like this. Should the user's password
+		// be displayed?
 		loggedUserProfile.setPassword("");
 
 		mnv.addObject("userProfile", loggedUserProfile);
@@ -46,23 +46,23 @@ public class UserProfileController extends AbstractController
 	}
 
 	@PostMapping
-	public ModelAndView updateUserProfile(@ModelAttribute("userProfile") User modelAttributeUser, RedirectAttributes ra, BindingResult bindingResult, Locale locale)
-	{
-		ModelAndView mnv = new ModelAndView("redirect:/profile");
+	public ModelAndView updateUserProfile(@ModelAttribute("userProfile") User modelAttributeUser, RedirectAttributes ra,
+			BindingResult bindingResult, Locale locale) {
+		ModelAndView mnv = new ModelAndView(SystemViewsName.REDIRECT_TO_USER_PROFILE_BASE_MAPPING);
 		User loggedUser = null;
 
 		try {
 			loggedUser = getUserService().getUserByLogin(getLoggedUserInformationComponent().tryGedLoggedUserName());
 		} catch (UserNotFoundException | NullPointerException e) {
-			//TODO: MKT - A mechanism should be created to handle such an exception.
+			// TODO: MKT - A mechanism should be created to handle such an exception.
 			LOGGER.error("Not Found Logged User in DB - Critical Error");
 			return mnv;
 		}
 
-		if(getUserService().isUserWithEmaillAddress(modelAttributeUser.getEmailAddress()))
-		{
+		if (!loggedUser.getEmailAddress().equals(modelAttributeUser.getEmailAddress()) && getUserService().isUserWithEmaillAddress(modelAttributeUser.getEmailAddress())) {
 			LOGGER.info("This Email Address is assigned to another systems user.");
-			ra.addFlashAttribute("error", getMessageSource().getMessage("userProfileUpdate.error.emailAddresIncorrect", null, locale));
+			ra.addFlashAttribute("error",
+					getMessageSource().getMessage("userProfileUpdate.error.emailAddressAssignedToOtherUser", null, locale));
 			return mnv;
 		}
 
@@ -70,7 +70,8 @@ public class UserProfileController extends AbstractController
 			getUserService().updateUser(loggedUser.getEmailAddress(), modelAttributeUser);
 		} catch (UserNotFoundException e) {
 			LOGGER.error("Not Found Logged User in DB");
-			ra.addFlashAttribute("error", getMessageSource().getMessage("userProfileUpdate.error.updatError", null, locale));
+			ra.addFlashAttribute("error",
+					getMessageSource().getMessage("userProfileUpdate.error.updatError", null, locale));
 			return mnv;
 		}
 		return mnv;

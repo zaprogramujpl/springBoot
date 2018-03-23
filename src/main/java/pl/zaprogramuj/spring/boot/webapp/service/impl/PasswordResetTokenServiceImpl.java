@@ -11,20 +11,17 @@ import pl.zaprogramuj.spring.boot.webapp.service.PasswordResetTokenService;
 
 @Service
 @Scope(scopeName = BeanDefinition.SCOPE_SINGLETON)
-public class PasswordResetTokenServiceImpl implements PasswordResetTokenService
-{
+public class PasswordResetTokenServiceImpl implements PasswordResetTokenService {
 	@Autowired
 	private PasswordResetTokenDao passwordResetTokenDao;
 
 	@Override
-	public PasswordResetToken findByToken(String token)
-	{
+	public PasswordResetToken findByToken(String token) {
 		return passwordResetTokenDao.findByToken(token);
 	}
 
 	@Override
-	public void deleteToken(PasswordResetToken token)
-	{
+	public void deleteToken(PasswordResetToken token) {
 		passwordResetTokenDao.deleteToken(token);
 	}
 }

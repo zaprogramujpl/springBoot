@@ -6,7 +6,7 @@
 <title>User Register Form Component - Webapplication by zaprogramuj.pl</title>
 </head>
 <body>
-	<div th:fragment="userRegisterFormComponent">\
+	<div th:fragment="userRegisterFormComponent">
 		<div sec:authorize="isAuthenticated()">Zalogowany</div>
 		<div sec:authorize="isAnonymous()">
 			<div layout:fragment="content">

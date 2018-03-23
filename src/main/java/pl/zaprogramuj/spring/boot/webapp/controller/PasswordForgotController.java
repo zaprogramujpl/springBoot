@@ -21,69 +21,60 @@ import pl.zaprogramuj.spring.boot.webapp.util.SystemViewsName;
 
 @Controller
 @RequestMapping(value = PasswordForgotController.BASE_MAPPING)
-public class PasswordForgotController extends AbstractController
-{
+public class PasswordForgotController extends AbstractController {
 	private static final Logger LOGGER = LoggerFactory.getLogger(PasswordForgotController.class);
-	
+
 	public static final String BASE_MAPPING = "/forgot-password";
-	
+
 	@InitBinder("forgotPasswordForm")
-	private void initBinding(WebDataBinder binder)
-	{
+	private void initBinding(WebDataBinder binder) {
 		binder.setValidator(getForgotPasswordFormValidator());
 	}
-	
+
 	@ModelAttribute("forgotPasswordForm")
-	public PasswordForgotForm passwordForgotForm()
-	{
+	public PasswordForgotForm passwordForgotForm() {
 		return new PasswordForgotForm();
 	}
-	
+
 	@RequestMapping
-	public ModelAndView forgotPasswordView()
-	{
+	public ModelAndView forgotPasswordView() {
 		return new ModelAndView(SystemViewsName.PASSWORD_FORGOT);
 	}
-	
+
 	@RequestMapping(method = RequestMethod.POST)
-	public ModelAndView forgotPasswordViewPost(@ModelAttribute("forgotPasswordForm") @Validated PasswordForgotForm form, BindingResult bindingResult)
-	{
+	public ModelAndView forgotPasswordViewPost(@ModelAttribute("forgotPasswordForm") @Validated PasswordForgotForm form,
+			BindingResult bindingResult) {
 		ModelAndView modelAndView = new ModelAndView(SystemViewsName.PASSWORD_FORGOT);
-		
+
 		User user = tryGetUserByEmailAddress(form.getEmailAddress());
-		
-		if(bindingResult.hasErrors())
-		{
+
+		if (bindingResult.hasErrors()) {
 			return modelAndView;
 		}
-		
-		if(user == null)
-		{
+
+		if (user == null) {
 			bindingResult.rejectValue("emailAddress", "forgotPasswordFormValidator.userNotExist");
 			return modelAndView;
 		}
 		getUserService().addUewPasswordResetTokenToUser(user);
-		
+
 		Mail mail = new Mail();
 		mail.setTo(user.getEmailAddress());
 		mail.setTemplateType(MailTemplateType.FORGOT_PASSWORD);
 		mail.setSubject("Test");
-		//getEmailService().sendEmail(mail);
-		
+		// getEmailService().sendEmail(mail);
+
 		modelAndView.addObject("successSendingEmail", true);
 		return modelAndView;
 	}
-		
-	private User tryGetUserByEmailAddress(String emailAddress)
-	{
-		User user = null;	
-		try
-		{
+
+	private User tryGetUserByEmailAddress(String emailAddress) {
+		User user = null;
+		try {
 			user = getUserService().getUserByEmail(emailAddress);
-		} catch (UserNotFoundException e)
-		{
+		} catch (UserNotFoundException e) {
 			LOGGER.error(e.getMessage());
-		}		
+		}
 		return user;
 	}
 }

@@ -19,48 +19,42 @@ import pl.zaprogramuj.spring.boot.webapp.util.SystemViewsName;
 
 @Controller
 @RequestMapping(value = AdminPostController.BASIC_MAPPING)
-public class AdminPostController extends AbstractAdminController
-{
-	private static final Logger LOGGER = LoggerFactory.getLogger(AdminPostController.class);
+public class AdminPostController extends AbstractAdminController {
 	
+	private static final Logger LOGGER = LoggerFactory.getLogger(AdminPostController.class);
+
 	public static final String BASIC_MAPPING = AdminHomeController.BASIC_MAPPING + "/posts";
 	public static final String ADMIN_MENU_POST_MANAGEMENT_ADD_POST = "/add";
-	
+
 	@GetMapping
-	public ModelAndView postPageGET()
-	{
+	public ModelAndView postPageGET() {
 		return new ModelAndView(SystemViewsName.ADMIN_POSTS_PAGE);
 	}
-	
+
 	@GetMapping(value = ADMIN_MENU_POST_MANAGEMENT_ADD_POST)
-	public ModelAndView addPostGET()
-	{
+	public ModelAndView addPostGET() {
 		ModelAndView mnv = new ModelAndView(SystemViewsName.ADMIN_ADD_POST_PAGE);
-		
+
 		mnv.addObject("postObject", new Post());
 		return mnv;
 	}
-	
+
 	@PostMapping(value = ADMIN_MENU_POST_MANAGEMENT_ADD_POST)
-	public ModelAndView addPostPOST(@ModelAttribute("postObject") Post post, RedirectAttributes ra)
-	{
+	public ModelAndView addPostPOST(@ModelAttribute("postObject") Post post, RedirectAttributes ra) {
 		ModelAndView mnv = new ModelAndView(SystemViewsName.ADMIN_ADD_POST_PAGE);
-		
-		try
-		{
+
+		try {
 			addLoggedUserToPost(post);
 			getPostService().addPost(post);
-		} catch (PostException e)
-		{
+		} catch (PostException e) {
 			LOGGER.error("Post Exception: " + e.getMessage());
 			return mnv;
 		}
-		
+
 		return new ModelAndView("redirect:" + BASIC_MAPPING);
 	}
-	
-	private void addLoggedUserToPost(Post post)
-	{
+
+	private void addLoggedUserToPost(Post post) {
 		User user = getLoggedUserInformationComponent().tryGetLoggedUser();
 		post.setCreationDate(LocalDateTime.now());
 		post.setAuthor(user);

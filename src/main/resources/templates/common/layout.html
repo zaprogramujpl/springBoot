@@ -7,7 +7,7 @@
 <body>
 	<div th:replace="common/navbar :: navbar"></div>
 	<div th:if="${error} != null">
-					<div th:text="${error}"></div>
+		<div th:text="${error}" class="container" style="padding-top: 50px"></div>
 	</div>
 	<div layout:fragment="content">
 		<h1>Content</h1>

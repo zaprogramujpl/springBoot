@@ -5,8 +5,11 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.validation.Validator;
 
+import pl.zaprogramuj.spring.boot.webapp.component.CommentComponent;
 import pl.zaprogramuj.spring.boot.webapp.component.LoggedUserInformationComponent;
+import pl.zaprogramuj.spring.boot.webapp.component.impl.CommentComponentImpl;
 import pl.zaprogramuj.spring.boot.webapp.component.impl.LoggedUserInformationComponentImpl;
+import pl.zaprogramuj.spring.boot.webapp.service.CommentService;
 import pl.zaprogramuj.spring.boot.webapp.service.EmailService;
 import pl.zaprogramuj.spring.boot.webapp.service.PageCharacteristicsService;
 import pl.zaprogramuj.spring.boot.webapp.service.PasswordResetTokenService;
@@ -54,6 +57,12 @@ public class ApplicationContextConfigurationControllerTest {
 	{
 		return Mockito.mock(PageCharacteristicsService.class);
 	}
+	
+	@Bean
+	public CommentService mockCommentService()
+	{
+		return Mockito.mock(CommentService.class);
+	}
 
 	@Bean(name = "userFormValidator")
 	public Validator mockUserFormValidator() {
@@ -69,6 +78,12 @@ public class ApplicationContextConfigurationControllerTest {
 	public LoggedUserInformationComponent mockLoggedUserInformationComponent()
 	{
 		return Mockito.mock(LoggedUserInformationComponentImpl.class);
+	}
+	
+	@Bean
+	public CommentComponent mockCommentComponent()
+	{
+		return Mockito.mock(CommentComponentImpl.class);
 	}
 
 

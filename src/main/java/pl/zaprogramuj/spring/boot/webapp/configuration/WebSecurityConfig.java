@@ -17,20 +17,18 @@ import pl.zaprogramuj.spring.boot.webapp.domain.user.UserRoleEnum;
 @EnableGlobalMethodSecurity(prePostEnabled = true)
 public class WebSecurityConfig extends WebSecurityConfigurerAdapter{
 	
-	private static final String[] MATCHERS = {"/", "/resources/**", "/registration", 
-											  "/login*", "/webjars/**", "/css/**" , 
-											  "/js/**", "/img/**", "/forgot-password**"
-											  ,"/reset-password**", "/post**", "/post/**"};
+	private static final String[] MATCHERS = { "/", "/resources/**", "/registration", "/login*", "/webjars/**",
+			"/css/**", "/js/**", "/img/**", "/forgot-password**", "/reset-password**", "/post**", "/post/**" };
 
-	private static final String[] MATCHERS_ADMIN = { "/admin**", "/admin/**"};
-	
-    @Autowired
-    private UserDetailsService userDetailsService;
+	private static final String[] MATCHERS_ADMIN = { "/admin**", "/admin/**" };
 
-    @Bean
-    public BCryptPasswordEncoder bCryptPasswordEncoder() {
-        return new BCryptPasswordEncoder();
-    }
+	@Autowired
+	private UserDetailsService userDetailsService;
+
+	@Bean
+	public BCryptPasswordEncoder bCryptPasswordEncoder() {
+		return new BCryptPasswordEncoder();
+	}
 
     @Override
     protected void configure(HttpSecurity http) throws Exception {
