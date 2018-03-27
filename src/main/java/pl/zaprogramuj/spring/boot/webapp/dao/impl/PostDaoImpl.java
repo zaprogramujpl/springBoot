@@ -8,6 +8,7 @@ import javax.persistence.criteria.Root;
 
 import org.hibernate.Session;
 import org.hibernate.query.Query;
+import org.hibernate.query.criteria.internal.predicate.IsEmptyPredicate;
 import org.springframework.beans.factory.config.BeanDefinition;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Repository;
@@ -44,18 +45,14 @@ public class PostDaoImpl extends AbstractDao<Long, Post> implements PostDao {
 
 	@Override
 	public List<Post> findAllPosts() {
-		return getEntityMenager().createQuery("from Post p", Post.class).getResultList();
+		return getEntityMenager().createQuery("from Post p ORDER BY p.creationDate DESC", Post.class).getResultList();
 	}
 
 	@Override
 	public Post findByUrlAddress(String urlAddress) {
 		Session session = getEntityMenager().unwrap(Session.class);
-		CriteriaBuilder builder = session.getCriteriaBuilder();
-		CriteriaQuery<Post> criteriaQuery = builder.createQuery(Post.class);
-		Root<Post> rootPost = criteriaQuery.from(Post.class);
-		criteriaQuery.select(rootPost).where(builder.equal(rootPost.get("urlAddress"), urlAddress));
-		Query<Post> query = session.createQuery(criteriaQuery);
-
-		return query.getResultList().isEmpty() ? null : query.getSingleResult();
+		Query<Post> query = session.createQuery("from Post p LEFT JOIN FETCH p.comments c WHERE p.urlAddress = :urlAddress AND c.parent IS NULL", Post.class);
+		query.setParameter("urlAddress", urlAddress);
+		return query.getResultList().size() > 0 ? query.getSingleResult() : null;
 	}
 }

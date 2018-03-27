@@ -68,7 +68,7 @@ public class PostServiceImpl implements PostService {
 		if (post == null)
 			throw new PostNotFoundException(urlAddress);
 
-		return postDao.findByUrlAddress(urlAddress);
+		return post;
 	}
 
 	@Override

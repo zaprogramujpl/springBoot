@@ -35,7 +35,7 @@ public class PostDaoImplTest
 		post.setTitle("titlePost");
 		postDao.addPost(post);
 		
-		Query query = entityManager.getEntityManager().createQuery("SELECT p from Post p");
+		Query query = entityManager.getEntityManager().createQuery("from Post p");
 		
 		assertEquals(1, query.getResultList().size());
 	}

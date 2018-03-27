@@ -62,7 +62,6 @@ public class PostController extends AbstractController {
 				&& Boolean.TRUE.toString().equals(postEditView) ? new ModelAndView(SystemViewsName.EDIT_POST_PAGE)
 						: new ModelAndView(SystemViewsName.POST_PAGE);
 
-		//TODO: MKT pobieranie listy postów które nie maja rodzica
 		Post post = getPostService().getPostByUrlAddress(postUrlAddress);
 		mnv.addObject("post", post);
 		mnv.addObject("commentForm", new CommentForm());

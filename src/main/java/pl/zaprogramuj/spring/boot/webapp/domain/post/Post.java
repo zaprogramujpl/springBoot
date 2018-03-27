@@ -12,6 +12,7 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
+import javax.persistence.Lob;
 import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
@@ -37,11 +38,11 @@ public class Post
 
 	private String description;
 
+	@Lob
 	private String content;
 
 	@Column(unique = true)
 	private String urlAddress;
-
 
 	private LocalDateTime creationDate;
 
@@ -49,7 +50,7 @@ public class Post
 	@JoinColumn(name = "id_author")
 	private User author;
 
-	@OneToMany(mappedBy = "post")
+	@OneToMany(fetch = FetchType.LAZY, mappedBy = "post")
 	private List<Comment> comments;
 
 	public long getId()
